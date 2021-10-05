@@ -2,9 +2,28 @@
 
 namespace Deployer;
 
+task('settings:env_info', function () {
+    writeln('');
+
+    $output = run('uname -a');
+    writeln($output);
+
+    writeln('');
+
+    $output = run('{{bin/php}} -v');
+    writeln($output);
+
+    writeln('');
+
+    $output = run('{{bin/git}} --version');
+    writeln($output);
+
+    writeln('');
+});
+
 task('settings:runSshAgent', function () {
 //    run('eval $(ssh-agent)');
-    ServerSshAgent::run();
+    ServerSsh::run();
 });
 
 task('settings:authSsh', function () {
@@ -23,8 +42,8 @@ task('settings:authSsh', function () {
 task('settings:gitSsh', function () {
     ServerFs::uploadIfNotExist('{{ssh_directory}}/config', '~/.ssh/config');
     ServerFs::uploadIfNotExist('{{ssh_directory}}/known_hosts', '~/.ssh/known_hosts');
-    uploadKey('my-github');
-    uploadKey('my-gitlab');
+    ServerSsh::uploadKey('my-github');
+    ServerSsh::uploadKey('my-gitlab');
 });
 
 task('settings:gitSshInfo', function () {
