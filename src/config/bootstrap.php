@@ -20,7 +20,9 @@ require_once __DIR__ . '/../../../../deployer/deployer/recipe/common.php';
 //require_once __DIR__ . '/../recipe/init_vars.php';initHostByUser();
 //require_once __DIR__ . '/../recipe/init_ssh.php';
 
-initVars();
-initHostByUser();
+//initVars();
+//initHostByUser();
+
+App::init();
 
 require_once __DIR__ . '/../recipe/zn.php';
