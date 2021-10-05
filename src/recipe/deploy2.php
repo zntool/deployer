@@ -2,12 +2,20 @@
 
 namespace Deployer;
 
+// if deploy to production, then ask to be sure
+task( 'confirm', function () {
+    if ( ! askConfirmation( 'Are you sure you want to deploy to production?' ) ) {
+        write( 'Ok, quitting.' );
+        die;
+    }
+} )->onStage( 'production' );
+
 // create new release folder on server
 task( 'create:release', function () {
     $i = 0;
     do {
-        $releasePath = '{{deploy_path}}/releases/' . date( 'Y-m-d_Hi_' ) . $i ++;
-    } while ( run( "if [ -d $releasePath ]; then echo exists; fi;" ) == 'exists' );
+        $releasePath = '{{deploy_path}}/releases/' . date( 'Y-m-d_H-i-s_' ) . $i ++;
+    } while (ServerFs::isDirectoryExists($releasePath));
     ServerFs::makeDirectory($releasePath);
 //    run( "{{sudo_cmd}} mkdir $releasePath", ['tty' => true] );
     set( 'release_path', $releasePath );
@@ -16,7 +24,7 @@ task( 'create:release', function () {
 
 // check out code from main repo and put into release folder
 task( 'update:code-main', function () {
-    run( "{{sudo_cmd}} git clone -b {{branch}} -q --depth 1 {{repo-main}} {{release_path}}" );
+    run( "{{sudo_cmd}} {{bin/git}} clone -b {{branch}} -q --depth 1 {{repo-main}} {{release_path}}" );
 
     // remove a few assorted things that are in the repo but should not be on the server
     /*cd( "{{release_path}}" );
@@ -29,7 +37,7 @@ task( 'update:code-main', function () {
 
 // update external libraries (npm, composer, etc)
 task( 'update:vendors', function () {
-    writeln( '<info>  Updating composer</info>' );
+    Console::writelnHead( '<info>  Updating composer</info>' );
     cd( '{{release_path}}' );
     run( 'composer install --no-dev' );
 //    cd( '{{release_path}}/html/final' );
@@ -79,5 +87,36 @@ task( 'cleanup', function () {
     // ...and delete the remaining (old) releases
     foreach ( $releases as $release ) {
         run( "{{sudo_cmd}} rm -rf $release" );
+    }
+} );
+
+// finally, notify user that we're done and compute total time
+task( 'notify:done', function () {
+    $seconds = App::getTotalTime();
+    $minutes = substr( '0' . intval( $seconds / 60 ), - 2 );
+    $seconds %= 60;
+    $seconds = substr( '0' . $seconds, - 2 );
+
+    // show (and speak) notification on desktop so we know it's done!
+    // note that next 2 commands are mac-specific
+//    shell_exec( "osascript -e 'display notification \"Total time: $minutes:$seconds\" with title \"Deploy Finished\"'" );
+//    shell_exec( 'say --rate 200 deployment finished' );
+    writeln("Finished! Total time: $minutes:$seconds");
+} );
+
+// roll back to previous release
+task( 'rollback', function () {
+    $releases = get( 'releases_list' );
+    if ( isset( $releases[1] ) ) {
+        // if we are using laravel artisan, take down site
+        // writeln(sprintf('  <error>%s</error>', run('php {{deploy_path}}/live/artisan down')));
+        $releaseDir = $releases[1];
+        run( "{{sudo_cmd}} ln -nfs $releaseDir {{deploy_path}}/live" );
+        run( "{{sudo_cmd}} rm -rf {$releases[0]}" );
+        writeln( "Rollback to `{$releases[1]}` release was successful." );
+        // if we are using laravel artisan, bring site back up
+        // writeln(sprintf('  <error>%s</error>', run("php {{deploy_path}}/live/artisan up")));
+    } else {
+        writeln( '  <comment>No more releases you can revert to.</comment>' );
     }
 } );

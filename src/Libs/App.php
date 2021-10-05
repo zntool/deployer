@@ -7,17 +7,27 @@ use ZnTool\Deployer\Helpers\LoaderHelper;
 
 class App {
 
+    private static $startTime;
+    
     public static function init() {
-
+        
+// keep track of the start time so we can compute total time
+        self::$startTime = microtime( true );
+        
         require_once __DIR__ . '/../Libs/App.php';
         require_once __DIR__ . '/../Libs/LocalFs.php';
         require_once __DIR__ . '/../Libs/ServerFs.php';
         require_once __DIR__ . '/../Libs/ServerSsh.php';
         require_once __DIR__ . '/../Libs/Zn.php';
+        require_once __DIR__ . '/../Libs/Console.php';
         
         DotEnv::init();
         self::initVars();
         self::initSshConnect();
+    }
+
+    public static function getTotalTime(): int {
+        return intval( microtime( true ) - self::$startTime );
     }
 
     public static function loadTasks(string $taskDir): void {

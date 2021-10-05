@@ -14,6 +14,11 @@ class ServerFs {
         return test("[ -f $file ]");
     }
 
+    public static function isDirectoryExists(string $file): bool
+    {
+        return test("[ -d $file ]");
+    }
+
     public static function uploadIfNotExist(string $source, string $dest): bool
     {
         if (!ServerFs::isFileExists($dest)) {
