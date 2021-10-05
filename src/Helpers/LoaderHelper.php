@@ -10,9 +10,13 @@ class LoaderHelper
     public static function loadTasks(string $taskDir): void {
         $fileList = FileHelper::scanDir($taskDir);
         foreach ($fileList as $fileName) {
-            if(FileHelper::fileExt($fileName) == 'php') {
-                require_once $taskDir . '/' . $fileName;
-            }
+            self::loadTask($taskDir . '/' . $fileName);
+        }
+    }
+
+    public static function loadTask(string $fileName): void {
+        if(FileHelper::fileExt($fileName) == 'php') {
+            require_once $fileName;
         }
     }
 }
