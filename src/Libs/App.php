@@ -7,9 +7,8 @@ use ZnTool\Deployer\Helpers\LoaderHelper;
 class App {
 
     public static function init() {
-        
-        /*self::initVars();
-        self::initSshConnect();*/
+        self::initVars();
+        self::initSshConnect();
     }
 
     public static function loadTasks(string $taskDir): void {
