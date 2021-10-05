@@ -10,7 +10,8 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    
+    "deployer/deployer": "v6.8.0",
+    "symfony/dotenv": "4.*|5.*"
   },
   "autoload": {
     "psr-4": {
