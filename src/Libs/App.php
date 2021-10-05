@@ -2,11 +2,20 @@
 
 namespace Deployer;
 
+use ZnCore\Base\Libs\DotEnv\DotEnv;
 use ZnTool\Deployer\Helpers\LoaderHelper;
 
 class App {
 
     public static function init() {
+
+        require_once __DIR__ . '/../Libs/App.php';
+        require_once __DIR__ . '/../Libs/LocalFs.php';
+        require_once __DIR__ . '/../Libs/ServerFs.php';
+        require_once __DIR__ . '/../Libs/ServerSsh.php';
+        require_once __DIR__ . '/../Libs/Zn.php';
+        
+        DotEnv::init();
         self::initVars();
         self::initSshConnect();
     }
@@ -30,8 +39,10 @@ class App {
         $host = host(get('host_ip'));
         $host->user($userName);
         $host->port(get('host_port'));
-        /*if(isset($_ENV['DEPLOYER_HOST_IDENTITY_FILE'])) {
-            $host->identityFile($_ENV['DEPLOYER_HOST_IDENTITY_FILE']);
-        }*/
+        $host->stage( 'staging' );
+        if(get('host_identity_file')) {
+            $host->identityFile(get('host_identity_file'));
+        }
+        $host->set( 'deploy_path', get('deploy_path'));
     }
 }

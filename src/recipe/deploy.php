@@ -2,7 +2,7 @@
 
 namespace Deployer;
 
-task('deploy:prepare', function () {
+/*task('deploy:prepare', function () {
     ServerFs::makeDirectory('{{deploy_path}}');
 //    makeDirectory('{{deploy_path}}');
     $isExists = ServerFs::isFileExists("{{deploy_path}}/.env");
@@ -21,7 +21,7 @@ task('deploy:update_code', function () {
     $output = run('{{bin/git}} checkout {{branch}}');
     $output = run('{{bin/git}} pull');
     writeln($output);
-});
+});*/
 
 task('deploy:down', function () {
     $output = run('rm -rf {{deploy_path}}');
