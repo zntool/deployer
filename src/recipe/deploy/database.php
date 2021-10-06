@@ -2,6 +2,10 @@
 
 namespace Deployer;
 
+/**
+ * @deprecated 
+ * @see project:migrate_up
+ */
 task('database:migrate_up', function () {
     $output = Zn::run('db:migrate:up --withConfirm=0');
 //    cd('{{release_path}}/vendor/bin');
@@ -10,6 +14,10 @@ task('database:migrate_up', function () {
     Console::writelnResult($output);
 })->desc('Run migrations');
 
+/**
+ * @deprecated
+ * @see project:fixtures_import
+ */
 task('database:fixtures_import', function () {
     $output = Zn::run('db:fixture:import --withConfirm=0');
 //    cd('{{release_path}}/vendor/bin');

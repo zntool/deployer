@@ -9,7 +9,7 @@ task( 'release:create', function () {
         $releasePath = '{{deploy_path}}/releases/' . date( 'Y-m-d_H-i-s_') . $i ++;
     } while (ServerFs::isDirectoryExists($releasePath));
     ServerFs::makeDirectory($releasePath);
-//    run( "{{sudo_cmd}} mkdir $releasePath", ['tty' => true] );
+//    ServerConsole::runSudo("mkdir $releasePath", ['tty' => true] );
     set( 'release_path', $releasePath );
     writeln( "Release path: $releasePath" );
 } );
@@ -19,18 +19,18 @@ task( 'release:update_symlinks', function () {
     // for each of the links below, first we we check for (and remove) any existing symlink
     // then put the new link in place
     // -e means if file exists, -h is if it is a symlink
+   
+//    ServerConsole::runSudo('cd {{deploy_path}} && if [ -e {{public_directory}} ]; then rm {{public_directory}}; fi');
+//    ServerConsole::runSudo('cd {{deploy_path}} && if [ -h {{public_directory}} ]; then rm {{public_directory}}; fi');
+    ServerConsole::runSudo('ln -nfs {{release_path}}/{{public_directory}} {{deploy_path}}/{{public_directory}}');
 
-//    run( '{{sudo_cmd}} cd {{deploy_path}} && if [ -e {{public_directory}} ]; then {{sudo_cmd}} rm {{public_directory}}; fi');
-//    run( '{{sudo_cmd}} cd {{deploy_path}} && if [ -h {{public_directory}} ]; then {{sudo_cmd}} rm {{public_directory}}; fi');
-    run( '{{sudo_cmd}} ln -nfs {{release_path}}/{{public_directory}} {{deploy_path}}/{{public_directory}}');
+    /*ServerConsole::runSudo('cd {{deploy_path}} && if [ -e messages ]; then rm messages; fi');
+    ServerConsole::runSudo('cd {{deploy_path}} && if [ -h messages ]; then rm messages; fi');
+    ServerConsole::runSudo('ln -nfs {{release_path}}/messages {{deploy_path}}/messages');
 
-    /*run( '{{sudo_cmd}} cd {{deploy_path}} && if [ -e messages ]; then {{sudo_cmd}} rm messages; fi');
-    run( '{{sudo_cmd}} cd {{deploy_path}} && if [ -h messages ]; then {{sudo_cmd}} rm messages; fi');
-    run( '{{sudo_cmd}} ln -nfs {{release_path}}/messages {{deploy_path}}/messages');
-
-    run( '{{sudo_cmd}} cd {{deploy_path}} && if [ -e vendor ]; then {{sudo_cmd}} rm vendor; fi');
-    run( '{{sudo_cmd}} cd {{deploy_path}} && if [ -h vendor ]; then {{sudo_cmd}} rm vendor; fi');
-    run( '{{sudo_cmd}} ln -nfs {{release_path}}/vendor {{deploy_path}}/vendor');*/
+    ServerConsole::runSudo('cd {{deploy_path}} && if [ -e vendor ]; then rm vendor; fi');
+    ServerConsole::runSudo('cd {{deploy_path}} && if [ -h vendor ]; then rm vendor; fi');
+    ServerConsole::runSudo('ln -nfs {{release_path}}/vendor {{deploy_path}}/vendor');*/
 } );
 
 // get a list of all the releases as an array
@@ -50,7 +50,7 @@ task( 'release:cleanup', function () {
 
     // ...and delete the remaining (old) releases
     foreach ( $releases as $release ) {
-        run( "{{sudo_cmd}} rm -rf $release" );
+        ServerConsole::runSudo("rm -rf $release" );
     }
 } );
 
@@ -61,8 +61,8 @@ task( 'rollback', function () {
         // if we are using laravel artisan, take down site
         // writeln(sprintf('  <error>%s</error>', run('php {{deploy_path}}/live/artisan down')));
         $releaseDir = $releases[1];
-        run( "{{sudo_cmd}} ln -nfs $releaseDir {{deploy_path}}/live" );
-        run( "{{sudo_cmd}} rm -rf {$releases[0]}" );
+        ServerConsole::runSudo("ln -nfs $releaseDir {{deploy_path}}/live" );
+        ServerConsole::runSudo("rm -rf {$releases[0]}" );
         writeln( "Rollback to `{$releases[1]}` release was successful." );
         // if we are using laravel artisan, bring site back up
         // writeln(sprintf('  <error>%s</error>', run("php {{deploy_path}}/live/artisan up")));
