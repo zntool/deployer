@@ -2,6 +2,10 @@
 
 namespace Deployer;
 
+use ZnCore\Base\Helpers\TempHelper;
+use ZnCore\Base\Helpers\TemplateHelper;
+use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
+
 task('settings:env_info', function () {
     writeln('');
 

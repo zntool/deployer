@@ -11,6 +11,6 @@ class ServerConsole
         if($sudoCmd) {
             $command = $sudoCmd . ' ' . $command;
         }
-        run($command, $options);
+        return run($command, $options);
     }
 }

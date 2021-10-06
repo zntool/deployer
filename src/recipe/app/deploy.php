@@ -19,6 +19,7 @@ task('deploy', [
     'zn:migrate_up',
     'zn:fixtures_import',
     'release:update_symlinks',
+    'apache:add_conf',
     'deploy:unlock',
     'release:cleanup',
 //    'notify:finished',
