@@ -4,7 +4,7 @@ namespace Deployer;
 
 // update external libraries (npm, composer, etc)
 task('vendors:composer_install', function () {
-    Console::writelnHead('Updating composer');
+    Console::writelnHead('Composer install');
     cd('{{release_path}}');
     run('{{bin/composer}} {{composer_options}}');  //    run( 'composer install --no-dev');
 //    cd( '{{release_path}}/html/final');
@@ -18,14 +18,14 @@ task('vendors:composer_install', function () {
 });
 
 task('vendors:composer_update', function () {
-    Console::writelnHead('Updating composer');
+    Console::writelnHead('Composer update');
     cd('{{release_path}}');
     $output = run('{{bin/composer}} up');
     Console::writelnResult($output);
 });
 
 task('vendors:npm_install', function () {
-    Console::writelnHead('Updating npm');
+    Console::writelnHead('NPM update');
     cd( '{{release_path}}/html');
     run( 'npm update');
     

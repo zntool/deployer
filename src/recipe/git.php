@@ -49,6 +49,16 @@ task('git:stash', function () {
     run('{{bin/git}} stash');
 });
 
+task('git:clone', function () {
+    ServerFs::makeDirectory('{{release_path}}');
+    $isExists = ServerFs::isFileExists("{{release_path}}/composer.json");
+    if (!$isExists) {
+        writeln('git clone');
+        run("{{sudo_cmd}} {{bin/git}} clone -b {{branch}} -q --depth 1 {{repository}} {{release_path}}");
+    }
+//    ServerFs::makeDirectory('{{release_path}}/.dep');
+});
+
 task('git:pull', function () {
     Console::writelnHead('GIT: pull');
     cd('{{release_path}}');
