@@ -23,10 +23,11 @@ class App
         return intval(microtime(true) - self::$startTime);
     }
 
-    public static function loadTasks(string $taskDir): void
+    /*public static function loadTasks(string $taskDir): void
     {
-        LoaderHelper::loadTasks($taskDir);
-    }
+        //LoaderHelper::loadTasks($taskDir);
+        requireLibs($taskDir);
+    }*/
 
     public static function initVars()
     {
