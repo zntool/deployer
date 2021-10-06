@@ -33,9 +33,14 @@ task('git:add_all', function () {
 });
 
 task('git:commit', function () {
-    Console::writelnHead('GIT: commit');
     cd('{{release_path}}');
-    run('{{bin/git}} commit -m upd');
+    $output = run('{{bin/git}} status');
+    if(strpos($output, 'nothing to commit') !== false) {
+        Console::writelnHead('Nothing to commit');
+    } else {
+        Console::writelnHead('GIT: commit');
+        run('{{bin/git}} commit -m upd');
+    }
 });
 
 task('git:stash', function () {
@@ -47,13 +52,15 @@ task('git:stash', function () {
 task('git:pull', function () {
     Console::writelnHead('GIT: pull');
     cd('{{release_path}}');
-    run('{{bin/git}} pull');
+    $output = run('{{bin/git}} pull');
+    Console::writelnResult($output);
 });
 
 task('git:push', function () {
     Console::writelnHead('GIT: push');
     cd('{{release_path}}');
-    run('{{bin/git}} push');
+    $output = run('{{bin/git}} push');
+    Console::writelnResult($output);
 });
 
 task('git:checkout', function () {

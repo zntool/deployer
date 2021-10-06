@@ -20,7 +20,8 @@ task('vendors:composer_install', function () {
 task('vendors:composer_update', function () {
     Console::writelnHead('Updating composer');
     cd('{{release_path}}');
-    run('{{bin/composer}} up');
+    $output = run('{{bin/composer}} up');
+    Console::writelnResult($output);
 });
 
 task('vendors:npm_install', function () {
