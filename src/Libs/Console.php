@@ -18,4 +18,11 @@ class Console
             writeln("<info>  $output</info>");
         }
     }
+
+    public static function writelnSuccess(string $output)
+    {
+        //if (get('show_detail')) {
+            writeln("<fg=green>✔ $output</>");
+        //}
+    }
 }
