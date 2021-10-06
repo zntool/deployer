@@ -6,7 +6,9 @@ require_once __DIR__ . '/../../../../../deployer/deployer/recipe/common.php';
 require_once __DIR__ . '/../../../../../zntool/deployer/src/recipe/deploy/all.php';
 
 task('deploy', [
+    'deploy:info',
     'confirm',
+    'deploy:lock',
     'benchmark:start',
     'release:create',
     'code:update',
@@ -17,6 +19,7 @@ task('deploy', [
     'zn:migrate_up',
     'zn:fixtures_import',
     'release:update_symlinks',
+    'deploy:unlock',
     'release:cleanup',
 //    'notify:finished',
 ]);
