@@ -3,6 +3,8 @@
 namespace Deployer;
 
 // if deploy to production, then ask to be sure
+use Symfony\Component\Console\Output\ConsoleOutput;
+
 task('confirm', function () {
     if (!askConfirmation('Are you sure you want to deploy to production?')) {
         write('Ok, quitting.');
@@ -12,9 +14,9 @@ task('confirm', function () {
 
 // finally, notify user that we're done and compute total time
 task('notify:finished', function () {
-    Console::writelnSuccess("Finished!");
     $total = BenchmarkWidget::total();
     if($total) {
         writeln("Total time: $total");
     }
+    Console::writelnSuccess("Finished!");
 });

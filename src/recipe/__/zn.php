@@ -2,7 +2,7 @@
 
 namespace Deployer;
 
-task('project:init', function () {
+task('zn:init', function () {
     $output = Zn::run('init --env=Ci --overwrite=All');
     /*cd('{{release_path}}/vendor/bin');
     $output = run('{{bin/php}} zn init --env=Ci --overwrite=All');*/

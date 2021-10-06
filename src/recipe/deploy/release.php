@@ -11,7 +11,7 @@ task( 'release:create', function () {
     ServerFs::makeDirectory($releasePath);
 //    ServerConsole::runSudo("mkdir $releasePath", ['tty' => true] );
     set( 'release_path', $releasePath );
-    writeln( "Release path: $releasePath" );
+    Console::writelnResult( "Release path: $releasePath" );
 } );
 
 // change the symlinks that the webserver uses, to actually "launch" this release

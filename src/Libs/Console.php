@@ -25,4 +25,12 @@ class Console
             writeln("<fg=green>✔ $output</>");
         //}
     }
+
+    public static function writelnError(string $output)
+    {
+        //if (get('show_detail')) {
+        writeln("<fg=red>❌ $output</>");
+        throw new \Exception($output);
+        //}
+    }
 }
