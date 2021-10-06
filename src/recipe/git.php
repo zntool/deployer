@@ -54,7 +54,7 @@ task('git:clone', function () {
     $isExists = ServerFs::isFileExists("{{release_path}}/composer.json");
     if (!$isExists) {
         writeln('git clone');
-        ServerConsole::runSudo("{{bin/git}} clone -b {{branch}} -q --depth 1 {{repository}} {{release_path}}");
+        ServerConsole::run("{{bin/git}} clone -b {{branch}} -q --depth 1 {{repository}} {{release_path}}");
     }
 //    ServerFs::makeDirectory('{{release_path}}/.dep');
 });

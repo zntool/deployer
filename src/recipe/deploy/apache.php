@@ -6,6 +6,18 @@ use ZnCore\Base\Helpers\TempHelper;
 use ZnCore\Base\Helpers\TemplateHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 
+task('apache:restart', function () {
+    ServerConsole::runSudo('systemctl restart apache2');
+});
+
+task('hosts:update', function () {
+    $content = ServerFs::downloadContent('/etc/hosts');
+    if(strpos($content, get('domain')) === false) {
+        $content .= PHP_EOL . '127.0.0.1 ' . get('domain');
+    }
+    ServerFs::uploadContent($content, '/etc/hosts');
+});
+
 task('apache:add_conf', function () {
 
     $template = '<VirtualHost *:80>
@@ -18,9 +30,11 @@ DocumentRoot {{deploy_path}}/{{public_directory}}
         'deploy_path' => get('deploy_path'),
         'public_directory' => get('public_directory'),
     ], '{{', '}}');
-    $dir = TempHelper::getTmpDirectory('apache_conf');
     $file = get('domain') . '.conf';
-    $fileName = $dir . '/' . $file;
-    FileHelper::save($fileName, $code);
-    ServerFs::uploadIfNotExist($fileName, '/etc/apache2/sites-available/' . $file);
+    ServerFs::uploadContentIfNotExist($code, '/etc/apache2/sites-available/' . $file);
+
+//    $dir = TempHelper::getTmpDirectory('apache_conf');
+//    $fileName = $dir . '/' . $file;
+//    FileHelper::save($fileName, $code);
+//    ServerFs::uploadIfNotExist($fileName, '/etc/apache2/sites-available/' . $file);
 });

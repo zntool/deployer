@@ -9,8 +9,13 @@ class ServerConsole
     {
         $sudoCmd = get('sudo_cmd', '');
         if($sudoCmd) {
-            $command = $sudoCmd . ' ' . $command;
+            $command = str_replace('{command}', $command, $sudoCmd);
         }
+        return self::run($command, $options);
+    }
+
+    public static function run($command, $options = [])
+    {
         return run($command, $options);
     }
 }

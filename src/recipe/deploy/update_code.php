@@ -4,7 +4,7 @@ namespace Deployer;
 
 // check out code from main repo and put into release folder
 task( 'code:update', function () {
-    ServerConsole::runSudo("{{bin/git}} clone -b {{branch}} -q --depth 1 {{repository}} {{release_path}}" );
+    ServerConsole::run("{{bin/git}} clone -b {{branch}} -q --depth 1 {{repository}} {{release_path}}" );
 
     // remove a few assorted things that are in the repo but should not be on the server
     /*cd( "{{release_path}}" );

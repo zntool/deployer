@@ -20,6 +20,8 @@ task('deploy', [
     'zn:fixtures_import',
     'release:update_symlinks',
     'apache:add_conf',
+//    'hosts:update',
+    'apache:restart',
     'deploy:unlock',
     'release:cleanup',
 //    'notify:finished',
@@ -27,3 +29,4 @@ task('deploy', [
 
 // if deployment fails, automatically unlock
 after('deploy:failed', 'deploy:unlock');
+//before('deploy:symlink', 'artisan:migrate');

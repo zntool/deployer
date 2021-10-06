@@ -2,6 +2,9 @@
 
 namespace Deployer;
 
+use ZnCore\Base\Helpers\TempHelper;
+use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
+
 class ServerFs {
 
     public static function makeDirectory(string $directory)
@@ -21,13 +24,37 @@ class ServerFs {
 
     public static function uploadIfNotExist(string $source, string $dest): bool
     {
-        if (!ServerFs::isFileExists($dest)) {
-            upload($source, $dest);
-            return true;
-            //writeln("File \"$dest\" already exist");
-        } else {
+        if (ServerFs::isFileExists($dest)) {
             return false;
-            //writeln("File \"$dest\" already exist");
         }
+        upload($source, $dest);
+        return true;
+    }
+
+    public static function uploadContentIfNotExist(string $content, string $dest): bool
+    {
+        if (ServerFs::isFileExists($dest)) {
+            return false;
+        }
+        ServerFs::uploadContent($content, $dest);
+        return true;
+    }
+
+    public static function uploadContent(string $content, string $dest)
+    {
+        $dir = TempHelper::getTmpDirectory('deployer_upload');
+        $file = basename($dest);
+        $fileName = $dir . '/' . $file;
+        FileHelper::save($fileName, $content);
+        upload($fileName, $dest);
+    }
+
+    public static function downloadContent(string $source): string
+    {
+        $dir = TempHelper::getTmpDirectory('deployer_upload');
+        $file = basename($source);
+        $fileName = $dir . '/' . $file;
+        download($source, $fileName);
+        return FileHelper::load($fileName);
     }
 }

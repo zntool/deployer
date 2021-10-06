@@ -6,6 +6,46 @@ use ZnCore\Base\Helpers\TempHelper;
 use ZnCore\Base\Helpers\TemplateHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 
+task('settings:php', [
+    'settings:permissions',
+    'settings:user_permissions',
+    'settings:link_sites_enabled',
+    'settings:copy_apache2_conf',
+]);
+
+
+
+
+task('settings:permissions', function () {
+    ServerConsole::runSudo('chmod -R ugo+rwx /etc/apache2');
+    ServerConsole::runSudo('chmod ugo+rwx /etc/hosts');
+//    ServerConsole::runSudo('chmod -R ugo+rwx /var/www');
+
+    ServerConsole::runSudo('chown user:www-data /var/www');
+    ServerConsole::runSudo('chmod g+s /var/www');
+});
+
+task('settings:user_permissions', function () {
+    ServerConsole::runSudo('usermod -aG www-data user');
+    ServerConsole::runSudo('chfn -o umask=022 user');
+});
+
+task('settings:link_sites_enabled', function () {
+    if(!ServerFs::isFileExists('/etc/apache2/sites-enabled.bak')) {
+        ServerConsole::runSudo('mv /etc/apache2/sites-enabled /etc/apache2/sites-enabled.bak');
+        ServerConsole::runSudo('ln -s /etc/apache2/sites-available /etc/apache2/sites-enabled');
+    }
+});
+
+task('settings:copy_apache2_conf', function () {
+    if(!ServerFs::isFileExists('/etc/apache2/apache2.conf.bak')) {
+        ServerConsole::runSudo('mv /etc/apache2/apache2.conf /etc/apache2/apache2.conf.bak');
+        ServerFs::uploadIfNotExist('/home/common/var/www/znexample/deployer/docs/apache2.conf', '/etc/apache2/apache2.conf');
+    }
+});
+
+
+
 task('settings:env_info', function () {
     writeln('');
 
