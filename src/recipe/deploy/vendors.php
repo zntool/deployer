@@ -17,6 +17,12 @@ task('vendors:composer_install', function () {
     run( 'npm update');*/
 });
 
+task('vendors:composer_update', function () {
+    Console::writelnHead('Updating composer');
+    cd('{{release_path}}');
+    run('{{bin/composer}} up');
+});
+
 task('vendors:npm_install', function () {
     Console::writelnHead('Updating npm');
     cd( '{{release_path}}/html');
