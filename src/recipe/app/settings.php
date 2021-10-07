@@ -19,8 +19,9 @@ task('settings:php', [
 task('settings:permissions', function () {
     ServerConsole::runSudo('chmod -R ugo+rwx /etc/apache2');
     ServerConsole::runSudo('chmod ugo+rwx /etc/hosts');
+//    ServerConsole::runSudo('chown user:www-data /etc/hosts');
 //    ServerConsole::runSudo('chmod -R ugo+rwx /var/www');
-
+    
     ServerConsole::runSudo('chown user:www-data /var/www');
     ServerConsole::runSudo('chmod g+s /var/www');
 });
@@ -34,13 +35,16 @@ task('settings:link_sites_enabled', function () {
     if(!ServerFs::isFileExists('/etc/apache2/sites-enabled.bak')) {
         ServerConsole::runSudo('mv /etc/apache2/sites-enabled /etc/apache2/sites-enabled.bak');
         ServerConsole::runSudo('ln -s /etc/apache2/sites-available /etc/apache2/sites-enabled');
+        ServerApache::restart();
     }
 });
 
 task('settings:copy_apache2_conf', function () {
+    $sourceConfigFile = realpath(__DIR__ . '/../../resources/apache2.conf');
     if(!ServerFs::isFileExists('/etc/apache2/apache2.conf.bak')) {
         ServerConsole::runSudo('mv /etc/apache2/apache2.conf /etc/apache2/apache2.conf.bak');
-        ServerFs::uploadIfNotExist('/home/common/var/www/znexample/deployer/docs/apache2.conf', '/etc/apache2/apache2.conf');
+        ServerFs::uploadIfNotExist($sourceConfigFile, '/etc/apache2/apache2.conf');
+        ServerApache::restart();
     }
 });
 

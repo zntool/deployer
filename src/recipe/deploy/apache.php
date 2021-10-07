@@ -7,15 +7,20 @@ use ZnCore\Base\Helpers\TemplateHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 
 task('apache:restart', function () {
-    ServerConsole::runSudo('systemctl restart apache2');
+    ServerApache::restart();
 });
 
 task('hosts:update', function () {
-    $content = ServerFs::downloadContent('/etc/hosts');
+    ServerApache::addHost(get('domain'));
+    /*$content = ServerFs::downloadContent('/etc/hosts');
     if(strpos($content, get('domain')) === false) {
         $content .= PHP_EOL . '127.0.0.1 ' . get('domain');
     }
-    ServerFs::uploadContent($content, '/etc/hosts');
+//    ServerConsole::runSudo('su - user');
+//    ServerFs::makeDirectory('~/tmp');
+    ServerFs::uploadContent($content, '~/tmp/hosts');
+    ServerConsole::runSudo('mv -f ~/tmp/hosts /etc/hosts');
+//    ServerFs::uploadContent($content, '/etc/hosts');*/
 });
 
 task('apache:add_conf', function () {

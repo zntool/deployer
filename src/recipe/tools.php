@@ -3,7 +3,7 @@
 namespace Deployer;
 
 task('tools:destroy', function () {
-    $output = run('rm -rf {{deploy_path}}');
+    $output = ServerConsole::runSudo('rm -rf {{deploy_path}}');
     writeln($output);
 });
 

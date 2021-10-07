@@ -46,6 +46,7 @@ class ServerFs {
         $file = basename($dest);
         $fileName = $dir . '/' . $file;
         FileHelper::save($fileName, $content);
+        ServerFs::makeDirectory(dirname($dest));
         upload($fileName, $dest);
     }
 

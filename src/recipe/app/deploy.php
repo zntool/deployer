@@ -20,7 +20,7 @@ task('deploy', [
     'zn:fixtures_import',
     'release:update_symlinks',
     'apache:add_conf',
-//    'hosts:update',
+    'hosts:update',
     'apache:restart',
     'deploy:unlock',
     'release:cleanup',
