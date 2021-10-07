@@ -9,8 +9,8 @@ use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 
 task('settings', [
     //'ssh:config:set_sudo_password',
-    'settings:user_permissions',
     'ssh:config:up',
+    'settings:user_permissions',
     
     'settings:permissions',
 

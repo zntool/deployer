@@ -19,7 +19,6 @@ task('ssh:config:authSsh', function () {
         runLocally('eval $(ssh-agent)');
         runLocally("ssh-add $key");
     }
-    //dd(realpath(get('host_identity_file')));
     $isUploaded = ServerFs::uploadIfNotExist(get('host_identity_file') . '.pub', '~/.ssh/authorized_keys');
     if ($isUploaded) {
         writeln("auth key installed!");
