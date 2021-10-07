@@ -56,7 +56,8 @@ DocumentRoot {{deploy_path}}/{{public_directory}}
 
 
 task('apache:install:base', function () {
-    ServerConsole::runSudo('apt-get install apache2 -y');
+    ServerApt::install('apache2');
+//    ServerConsole::runSudo('apt-get install apache2 -y');
 });
 
 task('apache:config:enable_rewrite', function () {

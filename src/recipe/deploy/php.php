@@ -3,19 +3,23 @@
 namespace Deployer;
 
 task('php:install:add-apt-repository', function () {
-    ServerConsole::runSudo('add-apt-repository -y ppa:ondrej/php');
+    ServerApt::install('ppa:ondrej/php');
+//    ServerConsole::runSudo('add-apt-repository -y ppa:ondrej/php');
 });
 
-task('php:install:apt-update', function () {
-    ServerConsole::runSudo('apt-get update -y');
-});
+/*task('php:install:apt-update', function () {
+    ServerApt::update();
+//    ServerConsole::runSudo('apt-get update -y');
+});*/
 
-task('php:install:php', function () {
-    ServerConsole::runSudo('apt-get install php7.2 php7.2-cli php7.2-common -y');
+task('php:install:base', function () {
+    ServerApt::install('php7.2 php7.2-cli php7.2-common');
+//    ServerConsole::runSudo('apt-get install php7.2 php7.2-cli php7.2-common -y');
 });
 
 task('php:install:ext', function () {
-    ServerConsole::runSudo('apt-get install php7.2-gmp php7.2-curl php7.2-zip php7.2-gd php7.2-json php7.2-mbstring php7.2-intl php7.2-mysql php7.2-sqlite3 php7.2-xml php7.2-zip php-imagick -y');
+    ServerApt::install('php7.2-gmp php7.2-curl php7.2-zip php7.2-gd php7.2-json php7.2-mbstring php7.2-intl php7.2-mysql php7.2-sqlite3 php7.2-xml php7.2-zip php-imagick');
+//    ServerConsole::runSudo('apt-get install php7.2-gmp php7.2-curl php7.2-zip php7.2-gd php7.2-json php7.2-mbstring php7.2-intl php7.2-mysql php7.2-sqlite3 php7.2-xml php7.2-zip php-imagick -y');
 });
 
 task('php:config:set_permission', function () {
@@ -30,8 +34,8 @@ task('php:config:update-config', function () {
 
 task('php:install', [
     'php:install:add-apt-repository',
-    'php:install:apt-update',
-    'php:install:php',
+    'apt:update', //'php:install:apt-update',
+    'php:install:base',
     'php:install:ext',
 ]);
 

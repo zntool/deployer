@@ -18,4 +18,9 @@ class ServerConsole
     {
         return run($command, $options);
     }
+
+    /*public static function aptInstall($package, $options = [])
+    {
+        return ServerConsole::runSudo("add-apt-repository -y $package", $options);
+    }*/
 }
