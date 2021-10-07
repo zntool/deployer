@@ -2,6 +2,8 @@
 
 namespace Deployer;
 
+use ZnCore\Base\Legacy\Yii\Helpers\ArrayHelper;
+use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 use ZnCore\Base\Libs\DotEnv\DotEnv;
 use ZnTool\Deployer\Helpers\LoaderHelper;
 
@@ -32,16 +34,27 @@ class App
 
     public static function initVars()
     {
+        if(isset($_ENV['DEPLOYER_CONFIG_FILE'])) {
+            $vars = include($_ENV['DEPLOYER_CONFIG_FILE']);
+        }
         foreach ($_ENV as $name => $value) {
             if (strpos($name, 'DEPLOYER_') === 0) {
                 $varName = substr($name, 9);
                 $varName = mb_strtolower($varName);
-                set($varName, $value);
-                self::$vars[$varName] = $value;
+                $vars[$varName] = $value;
             }
         }
+        self::initVarsFromArray($vars);
     }
 
+    public static function initVarsFromArray(array $vars)
+    {
+        foreach ($vars as $varName => $value) {
+            set($varName, $value);
+        }
+        self::$vars = ArrayHelper::merge(self::$vars, $vars);
+    }
+    
     public static function initSshConnect(string $userName = null)
     {
         $userName = $userName ?: get('host_user');

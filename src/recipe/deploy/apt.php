@@ -7,5 +7,5 @@ task('apt:update', function () {
 });
 
 task('apt:find', function () {
-    ServerApt::find('php');
+    writeln(ServerApt::isInstalled('php7.2'));
 });

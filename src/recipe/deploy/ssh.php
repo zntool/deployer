@@ -42,10 +42,10 @@ task('ssh:config:gitSshInfo', function () {
 });
 
 task('ssh:config:up', [
-    
     //'ssh:connect_by_root',
     //'ssh:config:runSshAgent',
     'ssh:config:authSsh',
+    'ssh:config:set_sudo_password',
     'ssh:config:gitSsh',
     'ssh:config:gitSshInfo',
 ]);

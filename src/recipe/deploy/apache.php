@@ -56,6 +56,10 @@ DocumentRoot {{deploy_path}}/{{public_directory}}
 
 
 task('apache:install:base', function () {
+    if(ServerApt::isInstalled('apache2')) {
+        Console::writelnWarning('Alredy installed!');
+        return;
+    }
     ServerApt::install('apache2');
 //    ServerConsole::runSudo('apt-get install apache2 -y');
 });
