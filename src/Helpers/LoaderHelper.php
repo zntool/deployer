@@ -2,7 +2,10 @@
 
 namespace ZnTool\Deployer\Helpers;
 
+use ZnCore\Base\Helpers\DeprecateHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
+
+DeprecateHelper::hardThrow();
 
 class LoaderHelper
 {
