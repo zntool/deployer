@@ -19,33 +19,21 @@ task('apache:status', function () {
     //systemctl status apache2
 });
 
-task('hosts:update', function () {
-    ServerApache::addHost(get('domain'));
-    /*$content = ServerFs::downloadContent('/etc/hosts');
-    if(strpos($content, get('domain')) === false) {
-        $content .= PHP_EOL . '127.0.0.1 ' . get('domain');
-    }
-//    ServerConsole::runSudo('su - user');
-//    ServerFs::makeDirectory('~/tmp');
-    ServerFs::uploadContent($content, '~/tmp/hosts');
-    ServerConsole::runSudo('mv -f ~/tmp/hosts /etc/hosts');
-//    ServerFs::uploadContent($content, '/etc/hosts');*/
-});
+task('apache:config:add_conf', function () {
 
-task('apache:add_conf', function () {
-
-    $template = '<VirtualHost *:80>
+    ServerApache::addConf(get('domain'), get('deploy_path') . '/' . get('public_directory'));
+    
+    /*$template = '<VirtualHost *:80>
 ServerName {{domain}}
 DocumentRoot {{deploy_path}}/{{public_directory}}
 </VirtualHost>';
-
     $code = TemplateHelper::render($template, [
         'domain' => get('domain'),
         'deploy_path' => get('deploy_path'),
         'public_directory' => get('public_directory'),
     ], '{{', '}}');
     $file = get('domain') . '.conf';
-    ServerFs::uploadContentIfNotExist($code, '/etc/apache2/sites-available/' . $file);
+    ServerFs::uploadContentIfNotExist($code, '/etc/apache2/sites-available/' . $file);*/
 
 //    $dir = TempHelper::getTmpDirectory('apache_conf');
 //    $fileName = $dir . '/' . $file;
@@ -62,6 +50,12 @@ task('apache:install:base', function () {
     }
     ServerApt::install('apache2');
 //    ServerConsole::runSudo('apt-get install apache2 -y');
+});
+
+task('apache:config:remove_conf', function () {
+    ServerApache::removeConf(get('domain'));
+//    $file = get('domain') . '.conf';
+//    ServerFs::removeFile('/etc/apache2/sites-available/' . $file);
 });
 
 task('apache:config:enable_rewrite', function () {

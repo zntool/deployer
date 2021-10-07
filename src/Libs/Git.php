@@ -45,6 +45,12 @@ class Git
         return ServerConsole::run($command);
     }
 
+    public static function isHasChanges(): bool
+    {
+        $output = Git::status();
+        return strpos($output, 'nothing to commit') !== false;
+    }
+    
     public static function status()
     {
         $command = "{{bin/git}} status";

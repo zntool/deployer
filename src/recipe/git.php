@@ -38,9 +38,10 @@ task('git:add_all', function () {
 
 task('git:commit', function () {
     cd('{{release_path}}');
-    $output = Git::status();
+    /*$output = Git::status();
 //    $output = run('{{bin/git}} status');
-    if(strpos($output, 'nothing to commit') !== false) {
+    if(strpos($output, 'nothing to commit') !== false) {*/
+    if(Git::isHasChanges()) {
         Console::writelnHead('Nothing to commit');
     } else {
         Console::writelnHead('GIT: commit');
