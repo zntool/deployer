@@ -27,7 +27,7 @@ class ServerFs {
         if (ServerFs::isFileExists($dest)) {
             return false;
         }
-        upload($source, $dest);
+        self::uploadFile($source, $dest);
         return true;
     }
 
@@ -40,14 +40,21 @@ class ServerFs {
         return true;
     }
 
-    public static function uploadContent(string $content, string $dest)
+    public static function uploadContent(string $content, string $destination)
     {
         $dir = TempHelper::getTmpDirectory('deployer_upload');
-        $file = basename($dest);
+        $file = basename($destination);
         $fileName = $dir . '/' . $file;
         FileHelper::save($fileName, $content);
-        ServerFs::makeDirectory(dirname($dest));
-        upload($fileName, $dest);
+//        ServerFs::makeDirectory(dirname($destination));
+//        upload($fileName, $destination);
+        self::uploadFile($fileName, $destination);
+    }
+
+    public static function uploadFile($source, $destination, array $config = [])
+    {
+        ServerFs::makeDirectory(dirname($destination));
+        upload($source, $destination, $config);
     }
 
     public static function downloadContent(string $source): string

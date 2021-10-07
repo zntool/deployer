@@ -9,6 +9,7 @@ class App
 {
 
     private static $startTime;
+    private static $vars = [];
 
     public static function init()
     {
@@ -36,6 +37,7 @@ class App
                 $varName = substr($name, 9);
                 $varName = mb_strtolower($varName);
                 set($varName, $value);
+                self::$vars[$varName] = $value;
             }
         }
     }
