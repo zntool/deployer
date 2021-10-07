@@ -7,6 +7,22 @@ use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 
 class ServerFs {
 
+    public static function removeFile(string $path)
+    {
+        if (!ServerFs::isFileExists($path)) {
+            return false;
+        }
+        ServerConsole::runSudo("rm $path");
+    }
+
+    public static function removeDir(string $path)
+    {
+        if (!ServerFs::isDirectoryExists($path)) {
+            return false;
+        }
+        ServerConsole::runSudo("rm -rf $path");
+    }
+    
     public static function makeDirectory(string $directory)
     {
         run("mkdir -p $directory");
