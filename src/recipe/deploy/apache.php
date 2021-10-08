@@ -71,7 +71,7 @@ task('apache:config:enable_rewrite', function () {
 
 task('apache:config:set_permission', function () {
     ServerConsole::runSudo('chmod -R ugo+rwx /etc/apache2');
-    ServerConsole::runSudo('chown user:www-data /var/www');
+    ServerConsole::runSudo('chown {{host_user}}:www-data /var/www');
     ServerConsole::runSudo('chmod g+s /var/www');
 });
 

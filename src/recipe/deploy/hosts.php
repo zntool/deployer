@@ -8,7 +8,7 @@ task('hosts:add', function () {
     if(strpos($content, get('domain')) === false) {
         $content .= PHP_EOL . '127.0.0.1 ' . get('domain');
     }
-//    ServerConsole::runSudo('su - user');
+//    ServerConsole::runSudo('su - {{host_user}}');
 //    ServerFs::makeDirectory('~/tmp');
     ServerFs::uploadContent($content, '~/tmp/hosts');
     ServerConsole::runSudo('mv -f ~/tmp/hosts /etc/hosts');

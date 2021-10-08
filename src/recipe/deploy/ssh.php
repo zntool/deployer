@@ -41,7 +41,7 @@ task('ssh:config:gitSshInfo', function () {
     writeln($output);
 });
 
-task('ssh:config:up', [
+task('ssh:config', [
     //'ssh:connect_by_root',
     //'ssh:config:runSshAgent',
     'ssh:config:authSsh',

@@ -12,7 +12,7 @@ task('tools:destroy', [
     'hosts:remove',
 ]);
 
-task('tools:set_root', function () {
+/*task('tools:set_root', function () {
     $output = ServerConsole::runSudo('whoami');
     writeln($output);
 
@@ -21,4 +21,4 @@ task('tools:set_root', function () {
 
     $output = ServerConsole::runSudo('whoami');
     writeln($output);
-});
+});*/
