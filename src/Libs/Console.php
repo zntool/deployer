@@ -8,10 +8,17 @@ class Console
     public static function writelnWarning(string $output)
     {
         //if (get('show_detail')) {
-            writeln("<fg=yellow>  $output</>");
+            writeln("<fg=yellow>! $output</>");
         //}
     }
-    
+
+    public static function writelnInfo(string $output)
+    {
+        //if (get('show_detail')) {
+        writeln("<fg=blue>i $output</>");
+        //}
+    }
+
     public static function writelnResult(string $output)
     {
         if (get('show_detail')) {

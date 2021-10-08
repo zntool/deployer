@@ -2,6 +2,8 @@
 
 namespace Deployer;
 
+use ZnCore\Base\Legacy\Yii\Helpers\ArrayHelper;
+
 task('ssh:config:set_sudo_password', function () {
     $pass = askHiddenResponse('Input sudo password:');
     ServerFs::uploadContent($pass, '~/sudo-pass');
@@ -25,11 +27,60 @@ task('ssh:config:authSsh', function () {
     }
 });
 
-task('ssh:config:gitSsh', function () {
+/*task('ssh:config:gitSsh', function () {
     ServerFs::uploadIfNotExist('{{ssh_directory}}/config', '~/.ssh/config');
     ServerFs::uploadIfNotExist('{{ssh_directory}}/known_hosts', '~/.ssh/known_hosts');
     ServerSsh::uploadKey('my-github');
     ServerSsh::uploadKey('my-gitlab');
+});*/
+
+task('ssh:config:gitSsh', function () {
+    $configData = [];
+
+    if(ServerFs::isFileExists('~/.ssh/config')) {
+        $config = ServerFs::downloadContent('~/.ssh/config');
+        preg_match_all('/Host\s+([^\s]+)\s+IdentityFile\s+([^\s]+)/', $config, $matches);
+        foreach ($matches[1] as $index => $domain) {
+            $keyName = $matches[2][$index];
+            $configData[] = [
+                'name' => basename($keyName),
+                'host' => $domain,
+                'path' => $keyName,
+            ];
+        }
+    }
+    
+    $indexed = ArrayHelper::index($configData, 'name');
+    $keyList = get('ssh_key_list');
+    foreach ($keyList as $item) {
+        $keyName = $item['name'];
+        $domain = $item['host'];
+        $isExists = isset($indexed[$keyName]);
+        if (!$isExists) {
+            $configData[] = [
+                'name' => $keyName,
+                'host' => $domain,
+                'path' => "~/.ssh/$keyName",
+            ];
+        }
+    }
+
+    $codeArr = [];
+    foreach ($configData as $item) {
+        $keyName = $item['name'];
+        $domain = $item['host'];
+        $codeArr[] = "Host $domain
+ IdentityFile ~/.ssh/$keyName";
+    }
+    $code = implode(PHP_EOL, $codeArr);
+    ServerFs::uploadContent($code, '~/.ssh/config');
+
+    foreach ($configData as $item) {
+        $keyName = $item['name'];
+        ServerSsh::uploadKey($keyName);
+    }
+
+    ServerFs::uploadIfNotExist('{{ssh_directory}}/known_hosts', '~/.ssh/known_hosts');
 });
 
 task('ssh:config:gitSshInfo', function () {

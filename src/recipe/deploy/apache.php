@@ -21,7 +21,7 @@ task('apache:status', function () {
 
 task('apache:config:add_conf', function () {
 
-    ServerApache::addConf(get('domain'), get('deploy_path') . '/' . get('public_directory'));
+    ServerApache::addConf(get('domain'), get('deploy_public_path'));
     
     /*$template = '<VirtualHost *:80>
 ServerName {{domain}}

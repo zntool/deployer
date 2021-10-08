@@ -40,7 +40,7 @@ task( 'release:update_symlinks', function () {
    
 //    ServerConsole::runSudo('cd {{deploy_path}} && if [ -e {{public_directory}} ]; then rm {{public_directory}}; fi');
 //    ServerConsole::runSudo('cd {{deploy_path}} && if [ -h {{public_directory}} ]; then rm {{public_directory}}; fi');
-    ServerConsole::runSudo('ln -nfs {{release_path}}/{{public_directory}} {{deploy_path}}/{{public_directory}}');
+    ServerConsole::runSudo('ln -nfs {{release_public_path}} {{deploy_public_path}}');
 
     /*ServerConsole::runSudo('cd {{deploy_path}} && if [ -e messages ]; then rm messages; fi');
     ServerConsole::runSudo('cd {{deploy_path}} && if [ -h messages ]; then rm messages; fi');

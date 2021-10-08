@@ -20,8 +20,8 @@ class ServerSsh {
     public static function uploadKey(string $source)
     {
         $dest = "~/.ssh/$source";
-        $isUploadedPrivateKey = ServerFs::uploadIfNotExist("{{ssh_directory}}/$source", $dest);
-        $isUploadedPublicKey = ServerFs::uploadIfNotExist("{{ssh_directory}}/$source.pub", "$dest.pub");
+        $isUploadedPrivateKey = ServerFs::uploadFile("{{ssh_directory}}/$source", $dest);
+        $isUploadedPublicKey = ServerFs::uploadFile("{{ssh_directory}}/$source.pub", "$dest.pub");
         if($isUploadedPrivateKey || $isUploadedPublicKey) {
             ServerSsh::run();
             run("ssh-add -D $dest");
