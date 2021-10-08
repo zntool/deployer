@@ -62,7 +62,7 @@ task('apache:config:enable_rewrite', function () {
     ServerConsole::runSudo('a2enmod rewrite');
 });
 
-/*task('apache:config:update-config', function () {
+/*task('apache:config:update_config', function () {
     $content = ServerFs::downloadContent('/etc/apache2/apache2.conf');
     $content .= PHP_EOL . PHP_EOL . '';
     $content = preg_replace('#short_open_tag\s*=\s*Off#i', 'short_open_tag=On', $content);
@@ -75,7 +75,7 @@ task('apache:config:set_permission', function () {
     ServerConsole::runSudo('chmod g+s /var/www');
 });
 
-task('apache:config:update-config', function () {
+task('apache:config:update_config', function () {
     $sourceConfigFile = realpath(__DIR__ . '/../../resources/apache2.conf');
     if(!ServerFs::isFileExists('/etc/apache2/apache2.conf.bak')) {
         ServerConsole::runSudo('mv /etc/apache2/apache2.conf /etc/apache2/apache2.conf.bak');
@@ -105,7 +105,7 @@ task('apache:config', [
     'apache:config:enable_rewrite',
     'apache:config:set_permission',
     'apache:config:link_sites_enabled',
-    'apache:config:update-config',
+    'apache:config:update_config',
     'apache:config:enable_autorun',
     'apache:restart',
     'apache:status',

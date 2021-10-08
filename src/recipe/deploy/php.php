@@ -3,7 +3,6 @@
 namespace Deployer;
 
 task('php:install:add-apt-repository', function () {
-
     ServerApt::addRepository('ppa:ondrej/php');
 //    ServerConsole::runSudo('add-apt-repository -y ppa:ondrej/php');
 });
@@ -35,7 +34,7 @@ task('php:config:set_permission', function () {
     ServerConsole::runSudo('chmod -R ugo+rwx /etc/php');
 });
 
-task('php:config:update-config', function () {
+task('php:config:update_config', function () {
     $content = ServerFs::downloadContent('/etc/php/7.2/apache2/php.ini');
     $content = preg_replace('#short_open_tag\s*=\s*Off#i', 'short_open_tag=On', $content);
     ServerFs::uploadContent($content, '/etc/php/7.2/apache2/php.ini');
@@ -50,5 +49,5 @@ task('php:install', [
 
 task('php:config', [
     'php:config:set_permission',
-    'php:config:update-config',
+    'php:config:update_config',
 ]);
