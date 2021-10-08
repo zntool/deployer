@@ -65,7 +65,7 @@ task('git:clone', function () {
         return;
     }
     writeln('git clone');
-    Git::clone('{{branch}}', '{{repository}}', '{{release_path}}');
+    Git::clone('{{repository}}', '{{branch}}', '{{release_path}}');
 //    ServerConsole::run("{{bin/git}} clone -b {{branch}} -q --depth 1 {{repository}} {{release_path}}");
 });
 
