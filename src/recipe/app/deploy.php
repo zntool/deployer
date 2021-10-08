@@ -17,7 +17,7 @@ task('deploy', [
     'composer:install',
     'zn:init',
     'zn:migrate_up',
-//    'zn:fixtures_import',
+    'zn:fixtures_import',
     'release:update_symlinks',
     'apache:config:add_conf',
     'hosts:add',
