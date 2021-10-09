@@ -6,7 +6,7 @@ use Deployer\Exception\GracefulShutdownException;
 
 task('deploy:lock', function () {
     ServerFs::makeDirectory('{{deploy_path}}/.dep');
-    $locked = test("[ -f {{deploy_path}}/.dep/deploy.lock ]");
+    $locked = ServerConsole::test("[ -f {{deploy_path}}/.dep/deploy.lock ]");
 
     if ($locked) {
         $stage = input()->hasArgument('stage') ? ' ' . input()->getArgument('stage') : '';

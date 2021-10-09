@@ -7,6 +7,6 @@ task('zn:init', function () {
     /*cd('{{release_path}}/vendor/bin');
     $output = ServerConsole::run('{{bin/php}} zn init --env=Ci --overwrite=All');*/
 //    writeln($output);
-    Console::writelnResult($output);
+    View::result($output);
 })->desc('Initialization');
 

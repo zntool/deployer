@@ -15,7 +15,7 @@ task('release:create', function () {
     ServerFs::makeDirectory($releasePath);
 //    ServerConsole::runSudo("mkdir $releasePath", ['tty' => true] );
     set('release_path', $releasePath);
-    Console::writelnResult("Release path: $releasePath");
+    View::result("Release path: $releasePath");
 });
 
 task('release:update_symlinks:current', function () {
@@ -94,8 +94,6 @@ task('release:cleanup', function () {
 task('rollback', function () {
     $releases = get('releases_list');
     if (isset($releases[1])) {
-        // if we are using laravel artisan, take down site
-        // writeln(sprintf('  <error>%s</error>', ServerConsole::run('php {{deploy_path}}/live/artisan down')));
         $releaseDir = $releases[1];
         ServerConsole::runSudo("ln -nfs $releaseDir {{deploy_path}}/live");
 //        ServerConsole::runSudo("rm -rf {$releases[0]}");

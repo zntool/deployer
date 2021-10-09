@@ -16,47 +16,23 @@ task('apache:start', function () {
 
 task('apache:status', function () {
     writeln(ServerApache::status());
-    //systemctl status apache2
 });
 
 task('apache:config:add_conf', function () {
-
     ServerApache::removeConf(get('domain'));
     ServerApache::addConf(get('domain'), get('deploy_public_path'));
-    
-    /*$template = '<VirtualHost *:80>
-ServerName {{domain}}
-DocumentRoot {{deploy_path}}/{{public_directory}}
-</VirtualHost>';
-    $code = TemplateHelper::render($template, [
-        'domain' => get('domain'),
-        'deploy_path' => get('deploy_path'),
-        'public_directory' => get('public_directory'),
-    ], '{{', '}}');
-    $file = get('domain') . '.conf';
-    ServerFs::uploadContentIfNotExist($code, '/etc/apache2/sites-available/' . $file);*/
-
-//    $dir = TempHelper::getTmpDirectory('apache_conf');
-//    $fileName = $dir . '/' . $file;
-//    FileHelper::save($fileName, $code);
-//    ServerFs::uploadIfNotExist($fileName, '/etc/apache2/sites-available/' . $file);
 });
-
-
 
 task('apache:install:base', function () {
     if(ServerApt::isInstalled('apache2')) {
-        Console::writelnWarning('Alredy installed!');
+        View::warning('Alredy installed!');
         return;
     }
     ServerApt::install('apache2');
-//    ServerConsole::runSudo('apt-get install apache2 -y');
 });
 
 task('apache:config:remove_conf', function () {
     ServerApache::removeConf(get('domain'));
-//    $file = get('domain') . '.conf';
-//    ServerFs::removeFile('/etc/apache2/sites-available/' . $file);
 });
 
 task('apache:config:enable_rewrite', function () {

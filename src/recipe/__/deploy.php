@@ -16,7 +16,7 @@ namespace Deployer;
 });
 
 task('deploy:update_code', function () {
-    cd('{{deploy_path}}');
+    ServerConsole::cd('{{deploy_path}}');
     $output = ServerConsole::run('{{bin/git}} fetch origin {{branch}}');
     $output = ServerConsole::run('{{bin/git}} checkout {{branch}}');
     $output = ServerConsole::run('{{bin/git}} pull');

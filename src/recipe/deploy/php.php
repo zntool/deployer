@@ -14,7 +14,7 @@ task('php:install:add-apt-repository', function () {
 
 task('php:install:base', function () {
     if(ServerApt::isInstalled('php7.2')) {
-        Console::writelnWarning('Alredy installed!');
+        View::warning('Alredy installed!');
         return;
     }
     ServerApt::install('php7.2 php7.2-cli php7.2-common');
@@ -23,7 +23,7 @@ task('php:install:base', function () {
 
 task('php:install:ext', function () {
     if(ServerApt::isInstalled('php7.2-gmp')) {
-        Console::writelnWarning('Alredy installed!');
+        View::warning('Alredy installed!');
         return;
     }
     ServerApt::install('php7.2-gmp php7.2-curl php7.2-zip php7.2-gd php7.2-json php7.2-mbstring php7.2-intl php7.2-mysql php7.2-sqlite3 php7.2-xml php7.2-zip php-imagick');

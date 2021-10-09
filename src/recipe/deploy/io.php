@@ -19,5 +19,5 @@ task('notify:finished', function () {
     if($total) {
         writeln("Total time: $total");
     }
-    Console::writelnSuccess("Finished!");
+    View::success("Finished!");
 });

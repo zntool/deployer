@@ -45,12 +45,12 @@ class ServerFs {
 
     public static function isFileExists(string $file): bool
     {
-        return test("[ -f $file ]");
+        return ServerConsole::test("[ -f $file ]");
     }
 
     public static function isDirectoryExists(string $file): bool
     {
-        return test("[ -d $file ]");
+        return ServerConsole::test("[ -d $file ]");
     }
 
     public static function uploadIfNotExist(string $source, string $dest): bool

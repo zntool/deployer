@@ -14,6 +14,6 @@ function requireLibs(string $directory) {
 
 function skipTask(string $name) {
     task($name, function () {
-        Console::writelnWarning('skip');
+        View::warning('skip');
     });
 }

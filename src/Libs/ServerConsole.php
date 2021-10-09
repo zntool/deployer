@@ -24,6 +24,16 @@ class ServerConsole
         return self::_run($command, $options);
     }
 
+    public static function test($command)
+    {
+        return test($command);
+    }
+
+    public static function cd($path)
+    {
+        return cd($path);
+    }
+
     protected function _run($command, $options = []) {
         return run($command, $options);
     }

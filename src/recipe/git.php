@@ -18,41 +18,41 @@ task('git:config', function () {
     }*/
     $config = Git::configList();
     if(empty($config['user.name'])) {
-        Console::writelnHead('GIT: set user.name');
+        View::head('GIT: set user.name');
         Git::config('user.name', 'Deployer', true);
 //        ServerConsole::run('{{bin/git}} config --global user.name "Deployer"');
     }
     if(empty($config['user.email'])) {
-        Console::writelnHead('GIT: set user.email');
+        View::head('GIT: set user.email');
         Git::config('user.email', 'deployer@example.com', true);
 //        ServerConsole::run('{{bin/git}} config --global user.email "deployer@example.com"');
     }
 });
 
 task('git:add_all', function () {
-    Console::writelnHead('GIT: add all to index');
-    cd('{{release_path}}');
+    View::head('GIT: add all to index');
+    ServerConsole::cd('{{release_path}}');
     Git::add();
 //    ServerConsole::run('{{bin/git}} add .');
 });
 
 task('git:commit', function () {
-    cd('{{release_path}}');
+    ServerConsole::cd('{{release_path}}');
     /*$output = Git::status();
 //    $output = ServerConsole::run('{{bin/git}} status');
     if(strpos($output, 'nothing to commit') !== false) {*/
     if(Git::isHasChanges()) {
-        Console::writelnHead('Nothing to commit');
+        View::head('Nothing to commit');
     } else {
-        Console::writelnHead('GIT: commit');
+        View::head('GIT: commit');
         Git::commit();
 //        ServerConsole::run('{{bin/git}} commit -m upd');
     }
 });
 
 task('git:stash', function () {
-    Console::writelnHead('GIT: stash');
-    cd('{{release_path}}');
+    View::head('GIT: stash');
+    ServerConsole::cd('{{release_path}}');
     Git::stash();
 //    ServerConsole::run('{{bin/git}} stash');
 });
@@ -61,7 +61,7 @@ task('git:clone', function () {
     ServerFs::makeDirectory('{{release_path}}');
     $isExists = ServerFs::isFileExists("{{release_path}}/composer.json");
     if ($isExists) {
-        Console::writelnWarning('GIT repository already exists');
+        View::warning('GIT repository already exists');
         return;
     }
     writeln('git clone');
@@ -70,24 +70,24 @@ task('git:clone', function () {
 });
 
 task('git:pull', function () {
-    Console::writelnHead('GIT: pull');
-    cd('{{release_path}}');
+    View::head('GIT: pull');
+    ServerConsole::cd('{{release_path}}');
     $output = Git::pull();
 //    $output = ServerConsole::run('{{bin/git}} pull');
-    Console::writelnResult($output);
+    View::result($output);
 });
 
 task('git:push', function () {
-    Console::writelnHead('GIT: push');
-    cd('{{release_path}}');
+    View::head('GIT: push');
+    ServerConsole::cd('{{release_path}}');
     $output = Git::push();
 //    $output = ServerConsole::run('{{bin/git}} push');
-    Console::writelnResult($output);
+    View::result($output);
 });
 
 task('git:checkout', function () {
-    Console::writelnHead('GIT: checkout');
-    cd('{{release_path}}');
+    View::head('GIT: checkout');
+    ServerConsole::cd('{{release_path}}');
     Git::checkout('{{branch}}');
 //    ServerConsole::run('{{bin/git}} checkout {{branch}}');
 });

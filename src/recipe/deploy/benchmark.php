@@ -2,7 +2,6 @@
 
 namespace Deployer;
 
-use ZnCore\Base\Helpers\TemplateHelper;
 use ZnCore\Base\Libs\Benchmark;
 
 class BenchmarkWidget
