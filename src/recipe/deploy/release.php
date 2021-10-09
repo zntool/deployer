@@ -14,16 +14,19 @@ task('release:create', function () {
     Console::writelnResult("Release path: $releasePath");
 });
 
+task('release:update_symlinks:current', function () {
+    ServerConsole::runSudo('ln -nfs {{release_path}} {{current_path}}');
+});
 
 // change the symlinks that the webserver uses, to actually "launch" this release
 task('release:update_symlinks:var', function () {
-    if(ServerFs::isDirectoryExists('{{deploy_path}}/var')) {
-        ServerFs::removeDir('{{release_path}}/var');
+    if(ServerFs::isDirectoryExists('{{deploy_var_path}}')) {
+        ServerFs::removeDir('{{release_var_path}}');
     } else {
-        ServerConsole::runSudo('mv {{release_path}}/var {{deploy_path}}/var');
+        ServerConsole::runSudo('mv {{release_var_path}} {{deploy_var_path}}');
     }
-    ServerConsole::runSudo('ln -nfs {{deploy_path}}/var {{release_path}}/var');
-    ServerFs::chmodRecurse('{{deploy_path}}/var');
+    ServerConsole::runSudo('ln -nfs {{deploy_var_path}} {{release_var_path}}');
+    ServerFs::chmodRecurse('{{deploy_var_path}}');
 });
 
 task('release:update_symlinks:env_local', function () {
