@@ -6,9 +6,9 @@ class ServerSsh {
 
     public static function run()
     {
-        run('eval $(ssh-agent)');
+        ServerConsole::run('eval $(ssh-agent)');
 
-        /*    run('if ps -p $SSH_AGENT_PID > /dev/null
+        /*    ServerConsole::run('if ps -p $SSH_AGENT_PID > /dev/null
     then
        echo "ssh-agent is already running"
     else
@@ -24,8 +24,8 @@ class ServerSsh {
         $isUploadedPublicKey = ServerFs::uploadFile("{{ssh_directory}}/$source.pub", "$dest.pub");
         if($isUploadedPrivateKey || $isUploadedPublicKey) {
             ServerSsh::run();
-            run("ssh-add -D $dest");
-            run("ssh-add $dest");
+            ServerConsole::run("ssh-add -D $dest");
+            ServerConsole::run("ssh-add $dest");
         }
     }
 }

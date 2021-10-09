@@ -36,17 +36,17 @@ task('settings:permissions:user', function () {
 task('settings:env_info', function () {
     writeln('');
 
-    $output = run('uname -a');
+    $output = ServerConsole::run('uname -a');
     writeln($output);
 
     writeln('');
 
-    $output = run('{{bin/php}} -v');
+    $output = ServerConsole::run('{{bin/php}} -v');
     writeln($output);
 
     writeln('');
 
-    $output = run('{{bin/git}} --version');
+    $output = ServerConsole::run('{{bin/git}} --version');
     writeln($output);
 
     writeln('');

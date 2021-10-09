@@ -65,7 +65,7 @@ task('release:update_symlinks:public', function () {
 
 // get a list of all the releases as an array
 set('releases_list', function () {
-    return explode("\n", run('ls -dt {{deploy_path}}/releases/*'));
+    return explode("\n", ServerConsole::run('ls -dt {{deploy_path}}/releases/*'));
 });
 
 task('release:configure_domain', [
@@ -95,14 +95,14 @@ task('rollback', function () {
     $releases = get('releases_list');
     if (isset($releases[1])) {
         // if we are using laravel artisan, take down site
-        // writeln(sprintf('  <error>%s</error>', run('php {{deploy_path}}/live/artisan down')));
+        // writeln(sprintf('  <error>%s</error>', ServerConsole::run('php {{deploy_path}}/live/artisan down')));
         $releaseDir = $releases[1];
         ServerConsole::runSudo("ln -nfs $releaseDir {{deploy_path}}/live");
 //        ServerConsole::runSudo("rm -rf {$releases[0]}");
         ServerFs::removeDir($releases[0]);
         writeln("Rollback to `{$releases[1]}` release was successful.");
         // if we are using laravel artisan, bring site back up
-        // writeln(sprintf('  <error>%s</error>', run("php {{deploy_path}}/live/artisan up")));
+        // writeln(sprintf('  <error>%s</error>', ServerConsole::run("php {{deploy_path}}/live/artisan up")));
     } else {
         writeln('  <comment>No more releases you can revert to.</comment>');
     }

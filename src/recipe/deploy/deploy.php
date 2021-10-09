@@ -16,6 +16,6 @@ task('deploy:lock', function () {
             sprintf('Execute "' . Deployer::getCalledScript() . ' deploy:unlock%s" to unlock.', $stage)
         );
     } else {
-        run("touch {{deploy_path}}/.dep/deploy.lock");
+        ServerConsole::run("touch {{deploy_path}}/.dep/deploy.lock");
     }
 });

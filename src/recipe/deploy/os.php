@@ -3,6 +3,6 @@
 namespace Deployer;
 
 task('os:common_name', function () {
-    $output = run('uname -a');
+    $output = ServerConsole::run('uname -a');
     Console::writelnInfo($output);
 })->shallow();

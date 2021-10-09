@@ -35,12 +35,12 @@ class ServerFs {
     
     public static function makeDirectory(string $directory)
     {
-        run("mkdir -p $directory");
+        ServerConsole::run("mkdir -p $directory");
     }
 
     public static function touch(string $file): bool
     {
-        run("touch $file");
+        ServerConsole::run("touch $file");
     }
 
     public static function isFileExists(string $file): bool

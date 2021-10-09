@@ -13,7 +13,7 @@ require_once __DIR__ . '/../../../../../deployer/deployer/recipe/common.php';
     $isExists = ServerFs::isFileExists("{{release_path}}/.env");
     if (!$isExists) {
         writeln('git clone');
-        run("{{sudo_cmd}} {{bin/git}} clone -b {{branch}} -q --depth 1 {{repository}} {{release_path}}");
+        ServerConsole::run("{{sudo_cmd}} {{bin/git}} clone -b {{branch}} -q --depth 1 {{repository}} {{release_path}}");
     }
     ServerFs::makeDirectory('{{release_path}}/.dep');
 });*/

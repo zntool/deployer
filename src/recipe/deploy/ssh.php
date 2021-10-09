@@ -10,7 +10,7 @@ task('ssh:config:set_sudo_password', function () {
 });
 
 task('ssh:config:runSshAgent', function () {
-//    run('eval $(ssh-agent)');
+//    ServerConsole::run('eval $(ssh-agent)');
     ServerSsh::run();
 });
 
@@ -85,10 +85,10 @@ task('ssh:config:gitSsh', function () {
 
 task('ssh:config:gitSshInfo', function () {
     /*cd('~/.ssh');
-    $output = run('ls -l');
+    $output = ServerConsole::run('ls -l');
     writeln($output);*/
 
-    $output = run('ssh-add -l');
+    $output = ServerConsole::run('ssh-add -l');
     writeln($output);
 });
 

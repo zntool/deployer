@@ -75,7 +75,7 @@ class Git
 
     public static function configList()
     {
-        $configCode = run('{{bin/git}} config --list');
+        $configCode = ServerConsole::run('{{bin/git}} config --list');
         $configLines = explode(PHP_EOL, $configCode);
         $config = [];
         foreach ($configLines as $line) {
