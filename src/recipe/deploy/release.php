@@ -2,6 +2,10 @@
 
 namespace Deployer;
 
+App::initVarsFromArray([
+    'keep_releases' => 3,
+]);
+
 // create new release folder on server
 task('release:create', function () {
     $i = 0;
