@@ -6,8 +6,8 @@ task('zn:init', function () {
 
     if(ServerFs::isDirectoryExists('{{deploy_var_path}}') || ServerFs::isFileExists('{{deploy_path}}/.env.local')) {
         set('is_new', false);
-        Console::writelnWarning('skip');
-        return;
+//        Console::writelnWarning('skip');
+//        return;
     } else {
         set('is_new', true);
     }
