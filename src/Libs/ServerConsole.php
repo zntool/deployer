@@ -11,11 +11,20 @@ class ServerConsole
         if($sudoCmd) {
             $command = str_replace('{command}', $command, $sudoCmd);
         }
-        return self::run($command, $options);
+        return self::_run($command, $options);
     }
 
     public static function run($command, $options = [])
     {
+        $command = trim($command);
+        if(strpos($command, 'sudo ') === 0) {
+            $command = substr($command, strlen('sudo '));
+            return self::runSudo($command, $options);
+        }
+        return self::_run($command, $options);
+    }
+
+    protected function _run($command, $options = []) {
         return run($command, $options);
     }
 
