@@ -14,8 +14,31 @@ task('release:create', function () {
     Console::writelnResult("Release path: $releasePath");
 });
 
+
 // change the symlinks that the webserver uses, to actually "launch" this release
-task('release:update_symlinks', function () {
+task('release:update_symlinks:var', function () {
+    if(ServerFs::isDirectoryExists('{{deploy_path}}/var')) {
+        ServerFs::removeDir('{{release_path}}/var');
+    } else {
+        ServerConsole::runSudo('mv {{release_path}}/var {{deploy_path}}/var');
+    }
+    ServerConsole::runSudo('ln -nfs {{deploy_path}}/var {{release_path}}/var');
+    ServerFs::chmodRecurse('{{deploy_path}}/var');
+});
+
+task('release:update_symlinks:env_local', function () {
+    if(ServerFs::isFileExists('{{deploy_path}}/.env.local')) {
+        ServerFs::removeFile('{{release_path}}/.env.local');
+    } else {
+        ServerConsole::runSudo('mv {{release_path}}/.env.local {{deploy_path}}/.env.local');
+    }
+    ServerConsole::runSudo('ln -nfs {{deploy_path}}/.env.local {{release_path}}/.env.local');
+    //ServerFs::makeDirectory('{{deploy_path}}/.env.local');
+    //ServerFs::chmod('{{deploy_path}}/.env.local');
+});
+
+// change the symlinks that the webserver uses, to actually "launch" this release
+task('release:update_symlinks:public', function () {
     // for each of the links below, first we we check for (and remove) any existing symlink
     // then put the new link in place
     // -e means if file exists, -h is if it is a symlink

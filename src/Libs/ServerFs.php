@@ -7,6 +7,16 @@ use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 
 class ServerFs {
 
+    public static function chmodRecurse(string $path)
+    {
+        ServerConsole::runSudo("chmod -R a+w $path");
+    }
+
+    public static function chmod(string $path)
+    {
+        ServerConsole::runSudo("chmod a+w $path");
+    }
+
     public static function removeFile(string $path)
     {
         if (!ServerFs::isFileExists($path)) {
@@ -26,6 +36,11 @@ class ServerFs {
     public static function makeDirectory(string $directory)
     {
         run("mkdir -p $directory");
+    }
+
+    public static function touch(string $file): bool
+    {
+        run("touch $file");
     }
 
     public static function isFileExists(string $file): bool
