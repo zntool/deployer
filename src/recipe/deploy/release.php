@@ -38,7 +38,7 @@ set('releases_list', function () {
     return explode("\n", run('ls -dt {{deploy_path}}/releases/*'));
 });
 
-set('release:configure_domain', [
+task('release:configure_domain', [
     'apache:config:add_conf',
     'hosts:add',
     'apache:restart',
