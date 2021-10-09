@@ -11,3 +11,9 @@ function requireLibs(string $directory) {
         require_once $directory . '/' . $lib;
     }
 }
+
+function skipTask(string $name) {
+    task($name, function () {
+        Console::writelnWarning('skip');
+    });
+}
