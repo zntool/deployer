@@ -20,20 +20,20 @@ abstract class BaseConsole
         return static::$sudoCommandName . ' ';
     }
 
-    public static function runSudo(string $command, $options = [])
-    {
-        $sudoCmdTpl = static::getSudoCommandTemplate();
-        if ($sudoCmdTpl) {
-            $command = str_replace('{command}', $command, $sudoCmdTpl);
-        }
-        return static::_run($command, $options);
-    }
-
     public static function run(string $command, $options = [])
     {
         if (static::isSudo($command)) {
             $command = static::stripSudo($command);
             return static::runSudo($command, $options);
+        }
+        return static::_run($command, $options);
+    }
+
+    protected static function runSudo(string $command, $options = [])
+    {
+        $sudoCmdTpl = static::getSudoCommandTemplate();
+        if ($sudoCmdTpl) {
+            $command = str_replace('{command}', $command, $sudoCmdTpl);
         }
         return static::_run($command, $options);
     }

@@ -13,12 +13,12 @@ task('tools:destroy', [
 ]);
 
 /*task('tools:set_root', function () {
-    $output = ServerConsole::runSudo('whoami');
+    $output = ServerConsole::run('sudo whoami');
     writeln($output);
 
-    $output = ServerConsole::runSudo('usermod -aG sudo {{host_user}}');
+    $output = ServerConsole::run('sudo usermod -aG sudo {{host_user}}');
     writeln($output);
 
-    $output = ServerConsole::runSudo('whoami');
+    $output = ServerConsole::run('sudo whoami');
     writeln($output);
 });*/

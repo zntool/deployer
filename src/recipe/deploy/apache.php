@@ -36,7 +36,7 @@ task('apache:config:remove_conf', function () {
 });
 
 task('apache:config:enable_rewrite', function () {
-    ServerConsole::runSudo('a2enmod rewrite');
+    ServerConsole::run('sudo a2enmod rewrite');
 });
 
 /*task('apache:config:update_config', function () {
@@ -47,28 +47,28 @@ task('apache:config:enable_rewrite', function () {
 });*/
 
 task('apache:config:set_permission', function () {
-    ServerConsole::runSudo('chmod -R ugo+rwx /etc/apache2');
-    ServerConsole::runSudo('chown {{host_user}}:www-data /var/www');
-    ServerConsole::runSudo('chmod g+s /var/www');
+    ServerConsole::run('sudo chmod -R ugo+rwx /etc/apache2');
+    ServerConsole::run('sudo chown {{host_user}}:www-data /var/www');
+    ServerConsole::run('sudo chmod g+s /var/www');
 });
 
 task('apache:config:update_config', function () {
     $sourceConfigFile = realpath(__DIR__ . '/../../resources/apache2.conf');
     if(!ServerFs::isFileExists('/etc/apache2/apache2.conf.bak')) {
-        ServerConsole::runSudo('mv /etc/apache2/apache2.conf /etc/apache2/apache2.conf.bak');
+        ServerConsole::run('sudo mv /etc/apache2/apache2.conf /etc/apache2/apache2.conf.bak');
         ServerFs::uploadIfNotExist($sourceConfigFile, '/etc/apache2/apache2.conf');
         //ServerApache::restart();
     }
 });
 
 task('apache:config:enable_autorun', function () {
-    ServerConsole::runSudo('systemctl enable apache2');
+    ServerConsole::run('sudo systemctl enable apache2');
 });
 
 task('apache:config:link_sites_enabled', function () {
     if(!ServerFs::isFileExists('/etc/apache2/sites-enabled.bak')) {
-        ServerConsole::runSudo('mv /etc/apache2/sites-enabled /etc/apache2/sites-enabled.bak');
-        ServerConsole::runSudo('ln -s /etc/apache2/sites-available /etc/apache2/sites-enabled');
+        ServerConsole::run('sudo mv /etc/apache2/sites-enabled /etc/apache2/sites-enabled.bak');
+        ServerConsole::run('sudo ln -s /etc/apache2/sites-available /etc/apache2/sites-enabled');
         //ServerApache::restart();
     }
 });

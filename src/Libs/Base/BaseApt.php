@@ -1,29 +1,29 @@
 <?php
 
-namespace Deployer;
+namespace ZnTool\Deployer\Libs\Base;
 
-class ServerApt
+abstract class BaseApt extends Base
 {
 
     public static function addRepository($package, $options = [])
     {
-        return ServerConsole::runSudo("add-apt-repository -y $package", $options);
+        return static::run("sudo add-apt-repository -y $package", $options);
     }
 
     public static function install($package, $options = [])
     {
-        return ServerConsole::runSudo("apt-get install $package -y", $options);
+        return static::run("sudo apt-get install $package -y", $options);
     }
 
     public static function update()
     {
-        return ServerConsole::runSudo('apt-get update -y');
+        return static::run('sudo apt-get update -y');
     }
 
     public static function find(string $package)
     {
         try {
-            $result = ServerConsole::run("dpkg-query --list | grep -i $package");
+            $result = static::run("dpkg-query --list | grep -i $package");
         } catch (\Throwable $e) {
             return [];
         }
@@ -34,7 +34,7 @@ class ServerApt
 
     public static function isInstalled(string $package): bool
     {
-        $list = ServerApt::find($package);
+        $list = static::find($package);
         return !empty($list);
     }
 }

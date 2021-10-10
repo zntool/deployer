@@ -2,18 +2,13 @@
 
 namespace ZnTool\Deployer\Libs\Base;
 
-use Deployer\LocalConsole;
 use ZnCore\Base\Helpers\TempHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 use function Deployer\download;
 use function Deployer\upload;
 
-abstract class BaseFs
+abstract class BaseFs extends Base
 {
-
-    abstract protected static function test(string $command): bool;
-
-    abstract protected static function run(string $command);
 
     public static function isFileExists(string $file): bool
     {

@@ -11,7 +11,7 @@ task('ssh:config:set_sudo_password', function () {
 
 task('ssh:config:runSshAgent', function () {
 //    ServerConsole::run('eval $(ssh-agent)');
-    ServerSsh::run();
+    ServerSsh::runAgent();
 });
 
 task('ssh:config:authSsh', function () {

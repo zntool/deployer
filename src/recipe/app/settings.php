@@ -21,16 +21,16 @@ task('settings:soft', [
 ]);
 
 task('settings:permissions:file', function () {
-    ServerConsole::runSudo('chmod ugo+rwx /etc/hosts');
-//    ServerConsole::runSudo('chown user:www-data /etc/hosts');
-//    ServerConsole::runSudo('chmod -R ugo+rwx /var/www');
-    /*ServerConsole::runSudo('chown user:www-data /var/www');
-    ServerConsole::runSudo('chmod g+s /var/www');*/
+    ServerConsole::run('sudo chmod ugo+rwx /etc/hosts');
+//    ServerConsole::run('sudo chown user:www-data /etc/hosts');
+//    ServerConsole::run('sudo chmod -R ugo+rwx /var/www');
+    /*ServerConsole::run('sudo chown user:www-data /var/www');
+    ServerConsole::run('sudo chmod g+s /var/www');*/
 });
 
 task('settings:permissions:user', function () {
-    ServerConsole::runSudo('usermod -aG www-data {{host_user}}');
-    ServerConsole::runSudo('chfn -o umask=022 {{host_user}}');
+    ServerConsole::run('sudo usermod -aG www-data {{host_user}}');
+    ServerConsole::run('sudo chfn -o umask=022 {{host_user}}');
 });
 
 task('settings:env_info', function () {
