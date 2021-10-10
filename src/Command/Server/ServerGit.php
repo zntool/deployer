@@ -2,9 +2,9 @@
 
 namespace Deployer;
 
-use ZnTool\Deployer\Libs\Base\BaseHosts;
+use ZnTool\Deployer\Command\Base\BaseGit;
 
-class ServerHosts extends BaseHosts
+class ServerGit extends BaseGit
 {
 
     protected static function side(): string

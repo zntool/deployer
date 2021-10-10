@@ -3,7 +3,7 @@
 namespace Deployer;
 
 use ZnCore\Base\Helpers\TemplateHelper;
-use ZnTool\Deployer\Libs\Base\BaseApache;
+use ZnTool\Deployer\Command\Base\BaseApache;
 
 class ServerApache extends BaseApache
 {

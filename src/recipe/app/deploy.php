@@ -10,7 +10,7 @@ require_once __DIR__ . '/../../../../../zntool/deployer/src/recipe/deploy/all.ph
 task('release:update_permissions', function () {
     $permissions = get('permissions');
     foreach ($permissions as $permission) {
-        ServerFs::chmodRecurse($permission['path']);
+        ServerFs::chmod($permission['path'], 'a+w', true);
     }
 });
 

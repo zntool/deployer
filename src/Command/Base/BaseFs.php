@@ -1,7 +1,8 @@
 <?php
 
-namespace ZnTool\Deployer\Libs\Base;
+namespace ZnTool\Deployer\Command\Base;
 
+use Deployer\ServerConsole;
 use ZnCore\Base\Helpers\TempHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 use function Deployer\download;
@@ -10,19 +11,39 @@ use function Deployer\upload;
 abstract class BaseFs extends Base
 {
 
+    const A_W = 'a+w';
+    const UGO_RWX = 'ugo+rwx';
+
+    public static function makeLink(string $filePath, string $linkPath, string $options = '-nfs'): bool
+    {
+        return static::run("sudo ln $options $filePath $linkPath");
+    }
+
+    public static function move(string $from, string $to, string $options = ''): bool
+    {
+        return static::run("sudo mv $options $from $to");
+    }
+
     public static function isFileExists(string $file): bool
     {
         return static::test("[ -f $file ]");
     }
 
-    public static function chmodRecurse(string $path)
+    public static function chmodRecurse(string $path, string $options)
     {
-        static::run("sudo chmod -R a+w $path");
+        static::chmod($path, $options, true);
+//        static::run("sudo chmod -R $options $path");
     }
 
-    public static function chmod(string $path)
+    public static function chmod(string $path, string $options, bool $isRecursive = false)
     {
-        static::run("sudo chmod a+w $path");
+        $recursive = $isRecursive ? '-R' : '';
+        static::run("sudo chmod $recursive $options $path");
+    }
+
+    public static function chown(string $path, string $owner)
+    {
+        static::run("sudo chown $owner $path");
     }
 
     public static function removeFile(string $path)

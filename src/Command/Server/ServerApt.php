@@ -2,9 +2,9 @@
 
 namespace Deployer;
 
-use ZnTool\Deployer\Libs\Base\BaseFs;
+use ZnTool\Deployer\Command\Base\BaseApt;
 
-class ServerFs extends BaseFs
+class ServerApt extends BaseApt
 {
 
     protected static function side(): string

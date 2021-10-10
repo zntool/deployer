@@ -2,6 +2,29 @@
 
 namespace Deployer;
 
+set('php_version', '7.2');
+set('phpv', 'php{{php_version}}');
+set('php_base_packages', [
+    '{{phpv}}',
+    '{{phpv}}-cli',
+    '{{phpv}}-common',
+]);
+set('php_ext_packages', [
+    '{{phpv}}-gmp',
+    '{{phpv}}-curl',
+    '{{phpv}}-zip',
+    '{{phpv}}-gd',
+    '{{phpv}}-json',
+    '{{phpv}}-mbstring',
+    '{{phpv}}-intl',
+    '{{phpv}}-mysql',
+    '{{phpv}}-sqlite3',
+    '{{phpv}}-xml',
+    '{{phpv}}-zip',
+//    'php-imagick',
+    '{{phpv}}-imagick',
+]);
+
 task('php:install:add-apt-repository', function () {
     ServerApt::addRepository('ppa:ondrej/php');
 //    ServerConsole::run('sudo add-apt-repository -y ppa:ondrej/php');
@@ -13,31 +36,36 @@ task('php:install:add-apt-repository', function () {
 });*/
 
 task('php:install:base', function () {
-    if(ServerApt::isInstalled('php7.2')) {
+    /*$packages = [
+        'php7.2',
+        'php7.2-cli',
+        'php7.2-common',
+    ];*/
+    ServerApt::installBatch(get('php_base_packages'));
+
+    /*if(ServerApt::isInstalled('php7.2')) {
         View::warning('Alredy installed!');
         return;
-    }
-    ServerApt::install('php7.2 php7.2-cli php7.2-common');
+    }*/
+//    ServerApt::install('  ');
 //    ServerConsole::run('sudo apt-get install php7.2 php7.2-cli php7.2-common -y');
 });
 
 task('php:install:ext', function () {
-    if(ServerApt::isInstalled('php7.2-gmp')) {
-        View::warning('Alredy installed!');
-        return;
-    }
-    ServerApt::install('php7.2-gmp php7.2-curl php7.2-zip php7.2-gd php7.2-json php7.2-mbstring php7.2-intl php7.2-mysql php7.2-sqlite3 php7.2-xml php7.2-zip php-imagick');
+    ServerApt::installBatch(get('php_ext_packages'));
+
 //    ServerConsole::run('sudo apt-get install php7.2-gmp php7.2-curl php7.2-zip php7.2-gd php7.2-json php7.2-mbstring php7.2-intl php7.2-mysql php7.2-sqlite3 php7.2-xml php7.2-zip php-imagick -y');
 });
 
 task('php:config:set_permission', function () {
-    ServerConsole::run('sudo chmod -R ugo+rwx /etc/php');
+    ServerFs::chmod('/etc/php', 'ugo+rwx', true);
+//    ServerConsole::run('sudo chmod -R ugo+rwx /etc/php');
 });
 
 task('php:config:update_config', function () {
-    $content = ServerFs::downloadContent('/etc/php/7.2/apache2/php.ini');
-    $content = preg_replace('#short_open_tag\s*=\s*Off#i', 'short_open_tag=On', $content);
-    ServerFs::uploadContent($content, '/etc/php/7.2/apache2/php.ini');
+    ServerPhp::setConfig('/etc/php/7.2/apache2/php.ini', [
+        'short_open_tag' => 'On',
+    ]);
 });
 
 task('php:install', [

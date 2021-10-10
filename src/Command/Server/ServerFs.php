@@ -2,9 +2,9 @@
 
 namespace Deployer;
 
-use ZnTool\Deployer\Libs\Base\BaseUser;
+use ZnTool\Deployer\Command\Base\BaseFs;
 
-class ServerUser extends BaseUser
+class ServerFs extends BaseFs
 {
 
     protected static function side(): string

@@ -5,6 +5,13 @@ namespace Deployer;
 class View
 {
 
+    public static function list(array $list)
+    {
+        foreach ($list as $item) {
+            writeln(" * $item");
+        }
+    }
+
     public static function warning(string $output)
     {
         //if (get('show_detail')) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace ZnTool\Deployer\Libs\Base;
+namespace ZnTool\Deployer\Command\Base;
 
 use ZnCore\Base\Helpers\TemplateHelper;
 

@@ -1,9 +1,17 @@
 <?php
 
-namespace ZnTool\Deployer\Libs\Base;
+namespace ZnTool\Deployer\Command\Base;
+
+use Deployer\ServerConsole;
 
 abstract class BaseSsh extends Base
 {
+
+    public static function list()
+    {
+        $output = static::run('ssh-add -l');
+        return explode(PHP_EOL, $output);
+    }
 
     public static function runAgent()
     {

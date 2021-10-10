@@ -2,7 +2,7 @@
 
 namespace Deployer;
 
-use ZnTool\Deployer\Libs\Base\BaseFs;
+use ZnTool\Deployer\Command\Base\BaseFs;
 
 class LocalFs extends BaseFs
 {

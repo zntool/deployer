@@ -27,11 +27,11 @@ task('composer:update', function () {
 task('npm:update', function () {
     View::head('NPM update');
     ServerConsole::cd( '{{release_path}}/html');
-    ServerConsole::run( 'npm update');
+    ServerConsole::run( '{{bin/npm}} update');
 });
 
 task('npm:install', function () {
     View::head('NPM install');
     ServerConsole::cd( '{{release_path}}/html');
-    ServerConsole::run( 'npm install');
+    ServerConsole::run( '{{bin/npm}} install');
 });

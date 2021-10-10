@@ -24,6 +24,7 @@ task('deploy:update_code', function () {
 });*/
 
 task('deploy:down', function () {
-    $output = ServerConsole::run('rm -rf {{deploy_path}}');
+    ServerFs::removeDir('{{deploy_path}}');
+//    $output = ServerConsole::run('rm -rf {{deploy_path}}');
     writeln($output);
 });

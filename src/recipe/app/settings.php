@@ -21,7 +21,8 @@ task('settings:soft', [
 ]);
 
 task('settings:permissions:file', function () {
-    ServerConsole::run('sudo chmod ugo+rwx /etc/hosts');
+    ServerFs::chmod('/etc/hosts', 'ugo+rwx');
+//    ServerConsole::run('sudo chmod ugo+rwx /etc/hosts');
 //    ServerConsole::run('sudo chown user:www-data /etc/hosts');
 //    ServerConsole::run('sudo chmod -R ugo+rwx /var/www');
     /*ServerConsole::run('sudo chown user:www-data /var/www');

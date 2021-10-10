@@ -2,9 +2,9 @@
 
 namespace Deployer;
 
-use ZnTool\Deployer\Libs\Base\BaseConsole;
+use ZnTool\Deployer\Command\Base\BaseConsole;
 
-class ServerConsole extends BaseConsole
+class LocalConsole extends BaseConsole
 {
 
     protected static function getSudoCommandTemplate()
@@ -14,7 +14,7 @@ class ServerConsole extends BaseConsole
 
     public static function test(string $command)
     {
-        return test($command);
+        return testLocally($command);
     }
 
     public static function cd(string $path)
@@ -24,6 +24,6 @@ class ServerConsole extends BaseConsole
 
     protected static function _run(string $command, $options = [])
     {
-        return run($command, $options);
+        return runLocally($command, $options);
     }
 }

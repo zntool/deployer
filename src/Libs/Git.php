@@ -2,10 +2,10 @@
 
 namespace Deployer;
 
-class Git
+class _______Git
 {
 
-    public static function clone(string $repository, string $branch = null, string $directory = '.')
+    /*public static function clone(string $repository, string $branch = null, string $directory = '.')
     {
         $command = "{{bin/git}} clone ";
         if($branch) {
@@ -87,5 +87,5 @@ class Git
             }
         }
         return $config;
-    }
+    }*/
 }

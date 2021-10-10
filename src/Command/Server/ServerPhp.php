@@ -2,9 +2,9 @@
 
 namespace Deployer;
 
-use ZnTool\Deployer\Libs\Base\BaseSsh;
+use ZnTool\Deployer\Command\Base\BasePhp;
 
-class ServerSsh extends BaseSsh
+class ServerPhp extends BasePhp
 {
 
     protected static function side(): string

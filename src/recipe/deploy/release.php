@@ -19,7 +19,7 @@ task('release:create', function () {
 });
 
 task('release:update_symlinks:current', function () {
-    ServerConsole::run('sudo ln -nfs {{release_path}} {{current_path}}');
+    ServerFs::makeLink('{{release_path}}', '{{current_path}}');
 });
 
 // change the symlinks that the webserver uses, to actually "launch" this release
@@ -27,19 +27,22 @@ task('release:update_symlinks:var', function () {
     if(ServerFs::isDirectoryExists('{{deploy_var_path}}')) {
         ServerFs::removeDir('{{release_var_path}}');
     } else {
-        ServerConsole::run('sudo mv {{release_var_path}} {{deploy_var_path}}');
+        ServerFs::move('{{release_var_path}}', '{{deploy_var_path}}');
+//        ServerConsole::run('sudo mv {{release_var_path}} {{deploy_var_path}}');
     }
-    ServerConsole::run('sudo ln -nfs {{deploy_var_path}} {{release_var_path}}');
-    ServerFs::chmodRecurse('{{deploy_var_path}}');
+    ServerFs::makeLink('{{deploy_var_path}}', '{{release_var_path}}');
+    //ServerConsole::run('sudo ln -nfs {{deploy_var_path}} {{release_var_path}}');
+    ServerFs::chmod('{{deploy_var_path}}', 'a+w', true);
 });
 
 task('release:update_symlinks:env_local', function () {
     if(ServerFs::isFileExists('{{deploy_path}}/.env.local')) {
         ServerFs::removeFile('{{release_path}}/.env.local');
     } else {
-        ServerConsole::run('sudo mv {{release_path}}/.env.local {{deploy_path}}/.env.local');
+        ServerFs::move('{{release_path}}/.env.local', '{{deploy_path}}/.env.local');
+//        ServerConsole::run('sudo mv {{release_path}}/.env.local {{deploy_path}}/.env.local');
     }
-    ServerConsole::run('sudo ln -nfs {{deploy_path}}/.env.local {{release_path}}/.env.local');
+    ServerFs::makeLink('{{deploy_path}}/.env.local', '{{release_path}}/.env.local');
     //ServerFs::makeDirectory('{{deploy_path}}/.env.local');
     //ServerFs::chmod('{{deploy_path}}/.env.local');
 });
@@ -52,7 +55,8 @@ task('release:update_symlinks:public', function () {
 
 //    ServerConsole::run('sudo cd {{deploy_path}} && if [ -e {{public_directory}} ]; then rm {{public_directory}}; fi');
 //    ServerConsole::run('sudo cd {{deploy_path}} && if [ -h {{public_directory}} ]; then rm {{public_directory}}; fi');
-    ServerConsole::run('sudo ln -nfs {{release_public_path}} {{deploy_public_path}}');
+    ServerFs::makeLink('{{release_public_path}}', '{{deploy_public_path}}');
+//    ServerConsole::run('sudo ln -nfs {{release_public_path}} {{deploy_public_path}}');
 
     /*ServerConsole::run('sudo cd {{deploy_path}} && if [ -e messages ]; then rm messages; fi');
     ServerConsole::run('sudo cd {{deploy_path}} && if [ -h messages ]; then rm messages; fi');
@@ -95,7 +99,8 @@ task('rollback', function () {
     $releases = get('releases_list');
     if (isset($releases[1])) {
         $releaseDir = $releases[1];
-        ServerConsole::run("sudo ln -nfs $releaseDir {{deploy_path}}/live");
+        ServerFs::makeLink($releaseDir, '{{deploy_path}}/live');
+//        ServerConsole::run("sudo ln -nfs $releaseDir {{deploy_path}}/live");
 //        ServerConsole::run("sudo rm -rf {$releases[0]}");
         ServerFs::removeDir($releases[0]);
         writeln("Rollback to `{$releases[1]}` release was successful.");
