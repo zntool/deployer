@@ -2,10 +2,18 @@
 
 namespace Deployer;
 
-class LocalFs {
+use ZnTool\Deployer\Libs\Base\BaseFs;
 
-    public static function isFileExists(string $file): bool
+class LocalFs extends BaseFs
+{
+
+    protected static function test(string $command): bool
     {
-        return testLocally("[ -f $file ]");
+        return LocalConsole::test($command);
+    }
+
+    protected static function run(string $command)
+    {
+        return LocalConsole::run($command);
     }
 }
