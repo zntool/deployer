@@ -2,7 +2,9 @@
 
 namespace ZnTool\Deployer\Command\Base;
 
+use Deployer\ServerApache;
 use ZnCore\Base\Helpers\TemplateHelper;
+use function Deployer\get;
 
 abstract class BaseApache extends Base
 {
@@ -30,6 +32,8 @@ abstract class BaseApache extends Base
 
     public static function addConf(string $domain, string $directory)
     {
+        static::removeConf($domain);
+
         $template = '<VirtualHost *:80>
     ServerName {{domain}}
     DocumentRoot {{directory}}
