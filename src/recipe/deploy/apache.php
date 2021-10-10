@@ -24,11 +24,7 @@ task('apache:config:add_conf', function () {
 });
 
 task('apache:install:base', function () {
-    if(ServerApt::isInstalled('apache2')) {
-        View::warning('Alredy installed!');
-        return;
-    }
-    ServerApt::install('apache2');
+    ServerPackage::install('apache2');
 });
 
 task('apache:config:remove_conf', function () {

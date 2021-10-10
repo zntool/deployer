@@ -2,9 +2,9 @@
 
 namespace Deployer;
 
-use ZnTool\Deployer\Command\Base\BaseApt;
+use ZnTool\Deployer\Command\Base\BasePackage;
 
-class _____ServerApt extends BaseApt
+class ServerPackage extends BasePackage
 {
 
     protected static function side(): string

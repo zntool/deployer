@@ -26,7 +26,7 @@ set('php_ext_packages', [
 ]);
 
 task('php:install:add-apt-repository', function () {
-    ServerApt::addRepository('ppa:ondrej/php');
+    ServerPackage::addRepository('ppa:ondrej/php');
 //    ServerConsole::run('sudo add-apt-repository -y ppa:ondrej/php');
 });
 
@@ -41,7 +41,7 @@ task('php:install:base', function () {
         'php7.2-cli',
         'php7.2-common',
     ];*/
-    ServerApt::installBatch(get('php_base_packages'));
+    ServerPackage::installBatch(get('php_base_packages'));
 
     /*if(ServerApt::isInstalled('php7.2')) {
         View::warning('Alredy installed!');
@@ -52,7 +52,7 @@ task('php:install:base', function () {
 });
 
 task('php:install:ext', function () {
-    ServerApt::installBatch(get('php_ext_packages'));
+    ServerPackage::installBatch(get('php_ext_packages'));
 
 //    ServerConsole::run('sudo apt-get install php7.2-gmp php7.2-curl php7.2-zip php7.2-gd php7.2-json php7.2-mbstring php7.2-intl php7.2-mysql php7.2-sqlite3 php7.2-xml php7.2-zip php-imagick -y');
 });
@@ -70,7 +70,7 @@ task('php:config:update_config', function () {
 
 task('php:install', [
     'php:install:add-apt-repository',
-    'apt:update',
+    'linux:package:update',
     'php:install:base',
     'php:install:ext',
 ]);

@@ -2,27 +2,25 @@
 
 namespace ZnTool\Deployer\Command\Base;
 
-use Deployer\ServerApt;
-use Deployer\ServerPackage;
 use Deployer\View;
 
-abstract class BaseApt extends Base
+abstract class BasePackage extends Base
 {
 
-    /*public static function addRepository($package, $options = [])
+    public static function addRepository($package, $options = [])
     {
         return static::run("sudo add-apt-repository -y $package", $options);
     }
 
     public static function install($package, $options = [])
     {
-        if (ServerPackage::isInstalled($package)) {
+        if (static::isInstalled($package)) {
             View::warning("$package alredy exist");
             return false;
         } else {
             $result = static::run("sudo apt-get install $package -y", $options);
             View::success("$package installed");
-            return $result;
+            return $result ?: true;
         }
     }
 
@@ -30,7 +28,7 @@ abstract class BaseApt extends Base
     {
         $exists = $new = [];
         foreach ($packages as $package) {
-            if (ServerApt::isInstalled($package)) {
+            if (static::isInstalled($package)) {
                 $exists[] = $package;
             } else {
                 $new[] = $package;
@@ -40,7 +38,7 @@ abstract class BaseApt extends Base
             View::warning("$package alredy exist");
         }
         $packagesString = implode(' ', $new);
-        if(trim($packagesString) != '') {
+        if (trim($packagesString) != '') {
             static::install($packagesString);
             foreach ($new as $package) {
                 View::success("$package installed");
@@ -53,7 +51,13 @@ abstract class BaseApt extends Base
         return static::run('sudo apt-get update -y');
     }
 
-    public static function find(string $package)
+    public static function isInstalled(string $package): bool
+    {
+        $list = static::find($package);
+        return !empty($list);
+    }
+
+    protected static function find(string $package)
     {
         try {
             $result = static::run("dpkg-query --list | grep -i $package");
@@ -64,11 +68,5 @@ abstract class BaseApt extends Base
         $list = explode(PHP_EOL, $result);
         return $list;
     }
-
-    public static function isInstalled(string $package): bool
-    {
-        $list = static::find($package);
-        return !empty($list);
-    }*/
 
 }
