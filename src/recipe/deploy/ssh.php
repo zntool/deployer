@@ -15,11 +15,15 @@ task('ssh:config:runSshAgent', function () {
 });
 
 task('ssh:config:authSsh', function () {
-    $key = '{{host_identity_file}}';
-    if(!LocalFs::isFileExists($key)) {
-        LocalConsole::run('ssh-keygen -t rsa -b 2048 -C "my@example.com" -f '.$key.' -N ""');
-        LocalConsole::run('eval $(ssh-agent)');
-        LocalConsole::run("ssh-add $key");
+    $keyFile = '{{host_identity_file}}';
+    if(!LocalFs::isFileExists($keyFile)) {
+        ServerSsh::generate($keyFile);
+        ServerSsh::runAgent();
+        ServerSsh::add($keyFile);
+
+//        LocalConsole::run('ssh-keygen -t rsa -b 2048 -C "my@example.com" -f '.$keyFile.' -N ""');
+//        LocalConsole::run('eval $(ssh-agent)');
+//        LocalConsole::run("ssh-add $key");
     }
     $isUploaded = ServerFs::uploadIfNotExist(get('host_identity_file') . '.pub', '~/.ssh/authorized_keys');
     if ($isUploaded) {
@@ -35,40 +39,13 @@ task('ssh:config:authSsh', function () {
 });*/
 
 task('ssh:config:gitSsh', function () {
-    $configData = [];
-
-    $sshConfig = new SshConfig();
-
-    if(ServerFs::isFileExists('~/.ssh/config')) {
-        $config = ServerFs::downloadContent('~/.ssh/config');
-        $configData = $sshConfig->parse($config);
-    }
-    
-//    $indexed = ArrayHelper::index($configData, 'name');
     $keyList = get('ssh_key_list');
-    foreach ($keyList as $item) {
-        $keyName = $item['name'];
-        $domain = $item['host'];
-//        $isExists = isset($indexed[$keyName]);
-        if (!$sshConfig->hasByName($keyName)) {
-            $sshConfig->add($keyName, $domain, "~/.ssh/$keyName");
-            /*$configData[] = [
-                'name' => $keyName,
-                'host' => $domain,
-                'path' => "~/.ssh/$keyName",
-            ];*/
-        }
-    }
-
-    $code = $sshConfig->generate();
-
-    ServerFs::uploadContent($code, '~/.ssh/config');
-
+    ServerSsh::setConfig($keyList);
+    $configData = ServerSsh::getList();
     foreach ($configData as $item) {
         $keyName = $item['name'];
         ServerSsh::uploadKey($keyName);
     }
-
     ServerFs::uploadIfNotExist('{{ssh_directory}}/known_hosts', '~/.ssh/known_hosts');
 });
 

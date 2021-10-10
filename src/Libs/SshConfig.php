@@ -14,6 +14,10 @@ class SshConfig
         $this->config = $config;
     }*/
 
+    public function getConfig(): array {
+        return $this->config;
+    }
+
     public function hasByName(string $name)
     {
         $indexed = ArrayHelper::index($this->config, 'name');
