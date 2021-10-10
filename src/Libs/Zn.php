@@ -2,7 +2,7 @@
 
 namespace Deployer;
 
-class Zn {
+class ___________Zn {
 
     public static function run(string $command) {
         ServerConsole::cd('{{release_path}}/vendor/bin');

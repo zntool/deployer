@@ -12,7 +12,8 @@ task('zn:init', function () {
         set('is_new', true);
     }
 
-    $output = Zn::run('init --env=Ci --overwrite=All');
+    $output = ServerZn::init('Ci');
+//    $output = Zn::run('init --env=Ci --overwrite=All');
     /*cd('{{release_path}}/vendor/bin');
     $output = ServerConsole::run('{{bin/php}} zn init --env=Ci --overwrite=All');*/
 //    writeln($output);
@@ -20,7 +21,8 @@ task('zn:init', function () {
 })->desc('Initialization');
 
 task('zn:migrate_up', function () {
-    $output = Zn::run('db:migrate:up --withConfirm=0');
+    $output = ServerZn::migrateUp();
+//    $output = Zn::run('db:migrate:up --withConfirm=0');
 //    ServerConsole::cd('{{release_path}}/vendor/bin');
 //    $output = ServerConsole::run('{{bin/php}} zn db:migrate:up --withConfirm=0');
 //    writeln($output);
@@ -33,7 +35,8 @@ task('zn:fixtures_import', function () {
         return;
     }
 
-    $output = Zn::run('db:fixture:import --withConfirm=0');
+    $output = ServerZn::fixtureImport();
+//    $output = Zn::run('db:fixture:import --withConfirm=0');
 //    ServerConsole::cd('{{release_path}}/vendor/bin');
 //    $output = ServerConsole::run('{{bin/php}} zn db:fixture:import --withConfirm=0');
 //    writeln($output);

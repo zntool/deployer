@@ -45,4 +45,10 @@ abstract class Base
         $consoleClassName = static::consoleClass();
         return $consoleClassName::run($command);
     }
+
+    protected static function cd(string $path)
+    {
+        $consoleClassName = static::consoleClass();
+        return $consoleClassName::cd($path);
+    }
 }
