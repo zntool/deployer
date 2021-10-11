@@ -18,6 +18,10 @@ require_once __DIR__ . '/../../../../../deployer/deployer/recipe/common.php';
     ServerFs::makeDirectory('{{release_path}}/.dep');
 });*/
 
+task('tools:set_upgrade_mode', function () {
+    set('release_path', ('{{deploy_path}}/upgrade'));
+});
+
 // this task runs all the subtasks defined above
 task('upgrade_vendor', [
     'os:common_name',
