@@ -46,24 +46,24 @@ task('release:update_symlinks:env_local', function () {
 });
 
 // change the symlinks that the webserver uses, to actually "launch" this release
-task('release:update_symlinks:public', function () {
-    // for each of the links below, first we we check for (and remove) any existing symlink
-    // then put the new link in place
-    // -e means if file exists, -h is if it is a symlink
-
-//    ServerConsole::run('sudo cd {{deploy_path}} && if [ -e {{public_directory}} ]; then rm {{public_directory}}; fi');
-//    ServerConsole::run('sudo cd {{deploy_path}} && if [ -h {{public_directory}} ]; then rm {{public_directory}}; fi');
-    ServerFs::makeLink('{{release_public_path}}', '{{deploy_public_path}}');
-//    ServerConsole::run('sudo ln -nfs {{release_public_path}} {{deploy_public_path}}');
-
-    /*ServerConsole::run('sudo cd {{deploy_path}} && if [ -e messages ]; then rm messages; fi');
-    ServerConsole::run('sudo cd {{deploy_path}} && if [ -h messages ]; then rm messages; fi');
-    ServerConsole::run('sudo ln -nfs {{release_path}}/messages {{deploy_path}}/messages');
-
-    ServerConsole::run('sudo cd {{deploy_path}} && if [ -e vendor ]; then rm vendor; fi');
-    ServerConsole::run('sudo cd {{deploy_path}} && if [ -h vendor ]; then rm vendor; fi');
-    ServerConsole::run('sudo ln -nfs {{release_path}}/vendor {{deploy_path}}/vendor');*/
-});
+//task('release:update_symlinks:public', function () {
+//    // for each of the links below, first we we check for (and remove) any existing symlink
+//    // then put the new link in place
+//    // -e means if file exists, -h is if it is a symlink
+//
+////    ServerConsole::run('sudo cd {{deploy_path}} && if [ -e {{public_directory}} ]; then rm {{public_directory}}; fi');
+////    ServerConsole::run('sudo cd {{deploy_path}} && if [ -h {{public_directory}} ]; then rm {{public_directory}}; fi');
+//    ServerFs::makeLink('{{release_public_path}}', '{{deploy_public_path}}');
+////    ServerConsole::run('sudo ln -nfs {{release_public_path}} {{deploy_public_path}}');
+//
+//    /*ServerConsole::run('sudo cd {{deploy_path}} && if [ -e messages ]; then rm messages; fi');
+//    ServerConsole::run('sudo cd {{deploy_path}} && if [ -h messages ]; then rm messages; fi');
+//    ServerConsole::run('sudo ln -nfs {{release_path}}/messages {{deploy_path}}/messages');
+//
+//    ServerConsole::run('sudo cd {{deploy_path}} && if [ -e vendor ]; then rm vendor; fi');
+//    ServerConsole::run('sudo cd {{deploy_path}} && if [ -h vendor ]; then rm vendor; fi');
+//    ServerConsole::run('sudo ln -nfs {{release_path}}/vendor {{deploy_path}}/vendor');*/
+//});
 
 // get a list of all the releases as an array
 set('releases_list', function () {
