@@ -80,7 +80,7 @@ abstract class BaseHosts extends Base
                 $groupCode .= "$ip\t$domain\n";
             }
             $groupCode = trim($groupCode);
-            $code .= "\n\n<$groupName>\n\n$groupCode\n\n<$groupName>\n\n";
+            $code .= "\n\n# <$groupName>\n\n$groupCode\n\n# </$groupName>\n\n";
         }
         static::fsClass()::uploadContent($code, '~/tmp/hosts');
         static::run('sudo mv -f ~/tmp/hosts /etc/hosts');

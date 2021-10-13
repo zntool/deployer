@@ -5,17 +5,29 @@ namespace Deployer;
 class View
 {
 
+    public static function newLine(int $count = 1)
+    {
+        for ($i=0; $i < $count; $i++) {
+            writeln(" ");
+        }
+    }
+    
+    public static function listItem(string $item)
+    {
+        writeln(" * $item");
+    }
+
     public static function list(array $list)
     {
         foreach ($list as $item) {
-            writeln(" * $item");
+            self::listItem($item);
         }
     }
 
     public static function warning(string $output)
     {
         //if (get('show_detail')) {
-            writeln("<fg=yellow>! $output</>");
+        writeln("<fg=yellow>! $output</>");
         //}
     }
 
@@ -43,7 +55,7 @@ class View
     public static function success(string $output)
     {
         //if (get('show_detail')) {
-            writeln("<fg=green>✔ $output</>");
+        writeln("<fg=green>✔ $output</>");
         //}
     }
 
