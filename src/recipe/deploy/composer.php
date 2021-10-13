@@ -3,6 +3,10 @@
 namespace Deployer;
 
 task('composer:install:base', function () {
+    if(ServerFs::isFileExists('/usr/bin/composer')) {
+        View::warning('Composer already installed');
+        return;
+    }
     ServerConsole::cd('~');
     ServerConsole::run('{{bin/php}} -r "unlink(\'composer.phar\');"');
     ServerConsole::run('{{bin/php}} -r "copy(\'https://getcomposer.org/installer\', \'composer-setup.php\');"');
