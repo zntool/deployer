@@ -6,7 +6,15 @@ task('tools:destroy:remove_project_dir', function () {
     ServerFs::removeDir('{{deploy_path}}');
 });
 
+task('tools:destroy:confirm', function () {
+    if (!askConfirmation('Are you sure you want to remove from server?')) {
+        writeln('Ok, quitting.');
+        die;
+    }
+});
+
 task('tools:destroy', [
+    'tools:destroy:confirm',
     'tools:destroy:remove_project_dir',
     'apache:config:remove_conf',
     'hosts:remove',
