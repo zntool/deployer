@@ -3,6 +3,7 @@
 namespace Deployer;
 
 set('keep_releases', 3);
+set('current_path', '{{deploy_path}}/current');
 
 // create new release folder on server
 task('release:create', function () {
