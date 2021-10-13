@@ -18,6 +18,8 @@ task('settings:soft', [
 
     'php:install',
     'php:config',
+
+    'composer:install:base',
 ]);
 
 task('settings:permissions:file', function () {

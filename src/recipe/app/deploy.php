@@ -37,6 +37,7 @@ task('deploy', [
     'deploy:unlock',
     'release:cleanup',
     'notify:finished',
+    'success',
 ]);
 
 // if deployment fails, automatically unlock
