@@ -8,15 +8,24 @@ set('keep_releases', 3);
 task('release:create', function () {
     $i = 0;
     do {
-        $releasePath = '{{deploy_path}}/releases/' . date('Y-m-d_H-i-s_') . $i++;
+        $releaseName = date('Y-m-d_H-i-s_') . $i++;
+        $releasePath = '{{deploy_path}}/releases/' . $releaseName;
     } while (ServerFs::isDirectoryExists($releasePath));
     ServerFs::makeDirectory($releasePath);
 //    ServerConsole::run("sudo mkdir $releasePath", ['tty' => true] );
     set('release_path', $releasePath);
+    set('release_name', $releaseName);
     View::result("Release path: $releasePath");
 });
 
 task('release:update_symlinks:current', function () {
+    ServerFs::makeLink('{{release_path}}', '{{current_path}}');
+});
+
+task('release:git:create_tag', function () {
+    ServerConsole::cd('{{release_path}}');
+    ServerGit::createTag("release_{{release_name}}");
+    ServerGit::push("release_{{release_name}}");
     ServerFs::makeLink('{{release_path}}', '{{current_path}}');
 });
 

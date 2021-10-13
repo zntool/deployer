@@ -33,6 +33,7 @@ task('deploy', [
     'release:update_permissions',
     'release:configure_domain',
     'release:update_symlinks:current',
+//    'release:git:create_tag',
     'deploy:unlock',
     'release:cleanup',
     'notify:finished',

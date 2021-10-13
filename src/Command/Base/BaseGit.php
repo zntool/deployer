@@ -8,9 +8,10 @@ use Deployer\ServerConsole;
 abstract class BaseGit extends Base
 {
 
-    protected static function runGit($command)
+    public static function createTag(string $name)
     {
-        return static::consoleClass()::run("{{bin/git}} $command");
+        $command = "tag '$name'";
+        return static::runGit($command);
     }
 
     public static function clone(string $repository, string $branch = null, string $directory = '.')
@@ -41,9 +42,12 @@ abstract class BaseGit extends Base
         return static::runGit($command);
     }
 
-    public static function push()
+    public static function push(string $branchName = null, string $target = 'origin')
     {
         $command = "push";
+        if($branchName) {
+            $command .= " $target '$branchName' ";
+        }
         return static::runGit($command);
     }
 
@@ -95,5 +99,10 @@ abstract class BaseGit extends Base
             }
         }
         return $config;
+    }
+    
+    protected static function runGit($command)
+    {
+        return static::consoleClass()::run("{{bin/git}} $command");
     }
 }
