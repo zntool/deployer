@@ -16,6 +16,7 @@ task('release:update_permissions', function () {
 
 task('deploy', [
     'deploy:info',
+    'deploy:profile',
     'confirm',
     'deploy:lock',
     'benchmark:start',

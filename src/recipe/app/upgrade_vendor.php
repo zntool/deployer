@@ -26,6 +26,7 @@ task('tools:set_upgrade_mode', function () {
 task('upgrade_vendor', [
     'os:common_name',
     'deploy:info',
+    'deploy:profile',
     'confirm',
     'benchmark:start',
     'tools:set_upgrade_mode',
