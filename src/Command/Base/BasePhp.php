@@ -9,12 +9,12 @@ abstract class BasePhp extends Base
 {
 
     public static function setConfig(string $configFile, array $config) {
-        $content = static::fsClass()::downloadContent('/etc/php/7.2/apache2/php.ini');
+        $content = static::fsClass()::downloadContent($configFile);
         $phpConfig = new PhpConfig($content);
         foreach ($config as $key => $value) {
             $phpConfig->enable($key);
             $phpConfig->set($key, $value);
         }
-        static::fsClass()::uploadContent($content, '/etc/php/7.2/apache2/php.ini');
+        static::fsClass()::uploadContent($content, $configFile);
     }
 }

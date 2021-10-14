@@ -66,6 +66,12 @@ task('php:config:update_config', function () {
     ServerPhp::setConfig('/etc/php/7.2/apache2/php.ini', [
         'short_open_tag' => 'On',
     ]);
+    ServerPhp::setConfig('/etc/php/7.2/cli/php.ini', [
+        'short_open_tag' => 'On',
+        'memory_limit' => '512M',
+        'max_input_time' => '600',
+        'max_execution_time' => '120',
+    ]);
 });
 
 task('php:install', [
