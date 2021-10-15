@@ -17,6 +17,7 @@ class App
     {
         self::$startTime = microtime(true);
         DotEnv::init();
+        self::loadProfiles();
         self::initVars();
         self::initSshConnect();
     }
@@ -47,6 +48,27 @@ class App
         self::initVarsFromArray($vars);
     }
 
+    public static function loadProfiles()
+    {
+        if(empty($_ENV['DEPLOYER_PROFILE_DIRECTORIES'])) {
+            return;
+        }
+        $directories = explode(',', $_ENV['DEPLOYER_PROFILE_DIRECTORIES']);
+        $profiles = [];
+        foreach ($directories as $directory) {
+            $directory = rtrim($directory, '/');
+            $files = FileHelper::scanDir($directory);
+            foreach ($files as $file) {
+                $path = $directory . '/' . $file;
+                if(is_file($path) && FileHelper::fileExt($file) == 'php') {
+                    $name = FileHelper::fileRemoveExt($file);
+                    $profiles[$name] = include $path;
+                }
+            }
+        }
+        set('profiles', $profiles);
+    }
+    
     public static function initVarsFromArray(array $vars)
     {
         foreach ($vars as $varName => $value) {
