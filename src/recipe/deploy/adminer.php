@@ -17,7 +17,6 @@ task('adminer:install:config', function () {
 });
 
 task('adminer:install:base', function () {
-
     $url = 'https://github.com/vrana/adminer/releases/download/v4.8.1/adminer-4.8.1.php';
     $hash = 'c86e050053807d5b76c74f80f1fe0f94f64feb93ed78cdbc10547420b5ca2cdb9b77642dff555daa33eadeeb45c6dae9';
     $destFile = 'adminer-4.8.1.php';
