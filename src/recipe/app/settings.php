@@ -56,5 +56,3 @@ task('settings:env_info', function () {
 
     writeln('');
 });
-
-
