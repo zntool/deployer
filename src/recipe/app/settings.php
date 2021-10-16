@@ -22,6 +22,7 @@ task('settings:soft', [
     'composer:install:base',
 
     'adminer:install',
+    'test-cors:install',
 ]);
 
 task('settings:permissions:file', function () {
