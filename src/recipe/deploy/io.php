@@ -20,4 +20,4 @@ task('notify:finished', function () {
         writeln("Total time: $total");
     }
     View::success("Finished!");
-});
+})->shallow();

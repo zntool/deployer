@@ -38,6 +38,22 @@ task('adminer:install:base', function () {
     
     ServerFs::uploadContent($indexContent, $destDirectory . '/index.php');
 });
+//
+///**
+// * Success message
+// */
+//task('success', function () {
+//    writeln('<info>Successfully deployed!</info>');
+//    $domains = get('domain');
+//    dd($domains);
+//    foreach ($domains as $item) {
+//        writeln("http://{$item['domain']}");
+//    }
+//
+//})
+//    ->local()
+//    ->shallow()
+//    ->setPrivate();
 
 task('adminer:install', [
     'deploy:info',
@@ -48,7 +64,7 @@ task('adminer:install', [
     'release:configure_domain',
     //'deploy:unlock',
     'notify:finished',
-    'success',
+//    'success',
 ]);
 
 after('deploy:failed', 'deploy:unlock');

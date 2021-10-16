@@ -34,7 +34,7 @@ task('test-cors:install', [
     'release:configure_domain',
     //'deploy:unlock',
     'notify:finished',
-    'success',
+//    'success',
 ]);
 
 after('deploy:failed', 'deploy:unlock');

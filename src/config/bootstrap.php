@@ -7,9 +7,11 @@ use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 
 require_once __DIR__ . '/../Helpers/functions.php';
 PhpHelper::requireFromDirectory(__DIR__ . '/../Libs');
-PhpHelper::requireFromDirectory(__DIR__ . '/../Command/Base');
-PhpHelper::requireFromDirectory(__DIR__ . '/../Command/Local');
-PhpHelper::requireFromDirectory(__DIR__ . '/../Command/Server');
+PhpHelper::requireFromDirectory(__DIR__ . '/../Command', true);
+
+//PhpHelper::requireFromDirectory(__DIR__ . '/../Command/Base');
+//PhpHelper::requireFromDirectory(__DIR__ . '/../Command/Local');
+//PhpHelper::requireFromDirectory(__DIR__ . '/../Command/Server');
 
 set('show_detail', 0);
 set('sudo_cmd', 'sudo -S {command} < ~/sudo-pass');

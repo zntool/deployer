@@ -34,7 +34,7 @@ abstract class BaseHosts extends Base
         static::saveConfig($content);
     }
 
-    protected static function loadConfig() {
+    public static function loadConfig() {
         $content = static::fsClass()::downloadContent('/etc/hosts');
 
 //        dd($content);
