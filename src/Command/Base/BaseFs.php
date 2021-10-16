@@ -2,7 +2,6 @@
 
 namespace ZnTool\Deployer\Command\Base;
 
-use Deployer\ServerConsole;
 use ZnCore\Base\Helpers\TempHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 use function Deployer\download;
@@ -13,6 +12,21 @@ abstract class BaseFs extends Base
 
     const A_W = 'a+w';
     const UGO_RWX = 'ugo+rwx';
+
+    public static function checkFileHash(string $filePath, string $hash, string $algo = 'sha384')
+    {
+        $output = static::run("{{bin/php}} -r \"if (hash_file('sha384', '$filePath') === '$hash') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('$filePath'); } echo PHP_EOL;\"");
+        self::isValidFileHash($filePath, $hash, $algo);
+        if ($output != 'Installer verified') {
+            throw new \Exception('File hash not verified!');
+        }
+    }
+
+    public static function isValidFileHash(string $filePath, string $hash, string $algo = 'sha384'): bool
+    {
+        $output = static::run("{{bin/php}} -r \"if (hash_file('sha384', '$filePath') === '$hash') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('$filePath'); } echo PHP_EOL;\"");
+        return $output != 'Installer verified';
+    }
 
     public static function makeLink(string $filePath, string $linkPath, string $options = '-nfs'): bool
     {

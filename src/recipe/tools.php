@@ -22,6 +22,8 @@ task('tools:destroy:confirm', function () {
 });
 
 task('tools:destroy', [
+    'deploy:info',
+    'deploy:profile',
     'tools:destroy:confirm',
     'tools:destroy:remove_project_dir',
     'apache:config:remove_conf',

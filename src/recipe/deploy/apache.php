@@ -18,17 +18,42 @@ task('apache:status', function () {
     writeln(ServerApache::status());
 });
 
+
+
+
+
+
 task('apache:config:add_conf', function () {
-    ServerApache::addConf(get('domain'), get('deploy_public_path'));
+    $domains = get('domains');
+    foreach ($domains as $item) {
+        $directory = parse($item['directory']);
+        ServerApache::addConf($item['domain'], $directory);
+    }
 });
+
+task('apache:config:remove_conf', function () {
+    $domains = get('domains');
+    foreach ($domains as $item) {
+        ServerApache::removeConf($item['domain']);
+    }
+});
+
+
+
+
+
+
+/*task('apache:config:add_conf', function () {
+    ServerApache::addConf(get('domain'), get('deploy_public_path'));
+});*/
 
 task('apache:install:base', function () {
     ServerPackage::install('apache2');
 });
 
-task('apache:config:remove_conf', function () {
+/*task('apache:config:remove_conf', function () {
     ServerApache::removeConf(get('domain'));
-});
+});*/
 
 task('apache:config:enable_rewrite', function () {
     ServerConsole::run('sudo a2enmod rewrite');
