@@ -33,6 +33,7 @@ task('test-cors:install', [
     'test-cors:install:base',
     'release:configure_domain',
     //'deploy:unlock',
+    'hosts:list:lamp',
     'notify:finished',
 //    'success',
 ]);

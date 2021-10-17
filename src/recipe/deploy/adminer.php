@@ -34,26 +34,8 @@ task('adminer:install:base', function () {
     $indexFile = __DIR__ . '/../../resources/adminer/index.php';
     $indexContent = FileHelper::load($indexFile);
     $indexContent = TemplateHelper::render($indexContent, ['adminerPhpModule' => $destFile], '{{', '}}');
-    //dd($indexContent);
-    
     ServerFs::uploadContent($indexContent, $destDirectory . '/index.php');
 });
-//
-///**
-// * Success message
-// */
-//task('success', function () {
-//    writeln('<info>Successfully deployed!</info>');
-//    $domains = get('domain');
-//    dd($domains);
-//    foreach ($domains as $item) {
-//        writeln("http://{$item['domain']}");
-//    }
-//
-//})
-//    ->local()
-//    ->shallow()
-//    ->setPrivate();
 
 task('adminer:install', [
     'deploy:info',
@@ -63,6 +45,7 @@ task('adminer:install', [
     'adminer:install:base',
     'release:configure_domain',
     //'deploy:unlock',
+    'hosts:list:lamp',
     'notify:finished',
 //    'success',
 ]);

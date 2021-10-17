@@ -12,7 +12,8 @@ task('settings:access', [
     'settings:permissions:file',
 ]);
 
-task('settings:soft', [
+
+task('lamp:install', [
     'apache:install',
     'apache:config',
 
@@ -20,10 +21,15 @@ task('settings:soft', [
     'php:config',
 
     'composer:install:base',
+]);
 
+
+task('web-tool:install', [
     'adminer:install',
     'test-cors:install',
+    'tiny-file-manager:install',
 ]);
+
 
 task('settings:permissions:file', function () {
     ServerFs::chmod('/etc/hosts', 'ugo+rwx');

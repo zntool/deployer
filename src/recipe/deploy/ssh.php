@@ -68,5 +68,5 @@ task('ssh:config', [
     'ssh:config:authSsh',
     'ssh:config:set_sudo_password',
     'ssh:config:gitSsh',
-    'ssh:config:gitSshInfo',
+//    'ssh:config:gitSshInfo',
 ]);

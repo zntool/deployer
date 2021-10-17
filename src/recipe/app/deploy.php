@@ -37,6 +37,7 @@ task('deploy', [
 //    'release:git:create_tag',
     'deploy:unlock',
     'release:cleanup',
+    'hosts:list:lamp',
     'notify:finished',
 //    'success',
 ]);

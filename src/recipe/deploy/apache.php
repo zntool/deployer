@@ -15,13 +15,13 @@ task('apache:start', function () {
 });
 
 task('apache:status', function () {
-    writeln(ServerApache::status());
-});
-
-
-
-
-
+    $statusEntity = ServerApache::status();
+    if($statusEntity->isActive()) {
+        View::success('Apache active');
+    } else {
+        View::warning('Apache not active');
+    }
+})->shallow();
 
 task('apache:config:add_conf', function () {
     $domains = get('domains');
