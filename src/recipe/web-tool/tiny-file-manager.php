@@ -37,6 +37,11 @@ task('tiny-file-manager:install:base', function () {
     $htaccessContent .= PHP_EOL . 'DirectoryIndex tinyfilemanager.php';
 //    dd($htaccessContent);
     ServerFs::uploadContent($htaccessContent, $destFilePath);
+
+    ServerFs::move('{{deploy_path}}/config-sample.php', '{{deploy_path}}/config.php');
+    $configContent = ServerFs::downloadContent('{{deploy_path}}/config.php');
+    $configContent = str_replace('$root_path = $_SERVER[\'DOCUMENT_ROOT\'];', '$root_path = "/var/www";', $configContent);
+    ServerFs::uploadContent($configContent, '{{deploy_path}}/config.php');
 });
 
 task('tiny-file-manager:install', [
