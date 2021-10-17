@@ -38,4 +38,18 @@ task('test-cors:install', [
 //    'success',
 ]);
 
+task('test-cors:remove', [
+    'deploy:info',
+//    'deploy:profile',
+    'benchmark:start',
+    'tools:destroy:confirm',
+    'test-cors:install:config',
+    'tools:destroy:remove_project_dir',
+    'apache:config:remove_conf',
+    'apache:restart',
+    'hosts:remove',
+    'hosts:list:lamp',
+    'notify:finished',
+]);
+
 after('deploy:failed', 'deploy:unlock');

@@ -50,4 +50,18 @@ task('adminer:install', [
 //    'success',
 ]);
 
+task('adminer:remove', [
+    'deploy:info',
+//    'deploy:profile',
+    'benchmark:start',
+    'tools:destroy:confirm',
+    'adminer:install:config',
+    'tools:destroy:remove_project_dir',
+    'apache:config:remove_conf',
+    'apache:restart',
+    'hosts:remove',
+    'hosts:list:lamp',
+    'notify:finished',
+]);
+
 after('deploy:failed', 'deploy:unlock');

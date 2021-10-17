@@ -52,4 +52,18 @@ task('tiny-file-manager:install', [
 //    'success',
 ]);
 
+task('tiny-file-manager:remove', [
+    'deploy:info',
+//    'deploy:profile',
+    'benchmark:start',
+    'tools:destroy:confirm',
+    'tiny-file-manager:install:config',
+    'tools:destroy:remove_project_dir',
+    'apache:config:remove_conf',
+    'apache:restart',
+    'hosts:remove',
+    'hosts:list:lamp',
+    'notify:finished',
+]);
+
 after('deploy:failed', 'deploy:unlock');
