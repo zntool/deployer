@@ -17,7 +17,7 @@ task('hosts:list:lamp', function () {
     foreach ($groups['lamp'] as $domain => $ip) {
         View::listItem('http://' . $domain . ':8080/');
     }
-});
+})->shallow();
 
 task('hosts:add', function () {
     $domains = get('domains');

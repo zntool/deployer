@@ -27,21 +27,25 @@ task('tiny-file-manager:install:base', function () {
     }*/
     ServerGit::clone('git@github.com:prasathmani/tinyfilemanager.git', 'master', get('deploy_path'));
 
-    $destFile = '.htaccess';
-    $destDirectory = get('deploy_path');
-    $destFilePath = $destDirectory . '/' . $destFile;
-    $htaccessFile = __DIR__ . '/../../resources/.htaccess';
-    $htaccessContent = FileHelper::load($htaccessFile);
-    $htaccessContent = TemplateHelper::render($htaccessContent, ['endpointScript' => 'tinyfilemanager.php'], '{{', '}}');
-    //dd($destFilePath);
-    $htaccessContent .= PHP_EOL . 'DirectoryIndex tinyfilemanager.php';
-//    dd($htaccessContent);
+    $htaccessGenerator = new HtaccessGenerator();
+    $htaccessGenerator->setDirectoryIndex(['tinyfilemanager.php']);
+    $htaccessGenerator->setRewriteRule('.', 'tinyfilemanager.php');
+    $htaccessContent = $htaccessGenerator->getCode();
+
+    $destFilePath = get('deploy_path') . '/.htaccess';
     ServerFs::uploadContent($htaccessContent, $destFilePath);
 
     ServerFs::move('{{deploy_path}}/config-sample.php', '{{deploy_path}}/config.php');
-    $configContent = ServerFs::downloadContent('{{deploy_path}}/config.php');
+
+    /*$configContent = ServerFs::downloadContent('{{deploy_path}}/config.php');
     $configContent = str_replace('$root_path = $_SERVER[\'DOCUMENT_ROOT\'];', '$root_path = "/var/www";', $configContent);
-    ServerFs::uploadContent($configContent, '{{deploy_path}}/config.php');
+    ServerFs::uploadContent($configContent, '{{deploy_path}}/config.php');*/
+
+    ServerFs::modifyFileWithCallback('{{deploy_path}}/config.php', function (string $content) {
+        $content = preg_replace('/\$root_path\s*=\s*.+;/i', '$root_path = "/var/www";', $content);
+        return $content;
+    });
+
 });
 
 task('tiny-file-manager:install', [

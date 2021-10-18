@@ -2,6 +2,7 @@
 
 namespace ZnTool\Deployer\Command\Base;
 
+use Deployer\ServerFs;
 use ZnCore\Base\Helpers\TempHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 use function Deployer\download;
@@ -89,6 +90,13 @@ abstract class BaseFs extends Base
     public static function isDirectoryExists(string $file): bool
     {
         return static::test("[ -d $file ]");
+    }
+
+    public static function modifyFileWithCallback(string $file, callable $callback): void
+    {
+        $content = ServerFs::downloadContent($file);
+        $content = call_user_func_array($callback, [$content]);
+        ServerFs::uploadContent($content, $file);
     }
 
     public static function uploadIfNotExist(string $source, string $dest): bool

@@ -23,6 +23,14 @@ task('test-cors:install:base', function () {
         return;
     }*/
     ServerGit::clone('git@github.com:monsur/test-cors.org.git', 'master', get('deploy_path'));
+
+    $htaccessGenerator = new HtaccessGenerator();
+    $htaccessGenerator->setDirectoryIndex(['corsclient.html']);
+    $htaccessGenerator->setRewriteRule('.', 'corsclient.html');
+    $htaccessContent = $htaccessGenerator->getCode();
+
+    $destFilePath = get('deploy_path') . '/.htaccess';
+    ServerFs::uploadContent($htaccessContent, $destFilePath);
 });
 
 task('test-cors:install', [
