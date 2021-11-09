@@ -23,6 +23,8 @@ task('lamp:install', [
     'php:config',
 
     'composer:install:base',
+
+    'npm:install',
 ]);
 
 
