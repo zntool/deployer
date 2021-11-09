@@ -2,6 +2,7 @@
 
 namespace ZnTool\Deployer\Command\Base;
 
+use Deployer\ServerConsole;
 use Deployer\ServerFs;
 use ZnCore\Base\Helpers\TempHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
@@ -14,9 +15,30 @@ abstract class BaseFs extends Base
     const A_W = 'a+w';
     const UGO_RWX = 'ugo+rwx';
 
+    public static function wget(string $url, string $filePath, string $hash = null, string $algo = 'sha384')
+    {
+//        ServerConsole::cd('~');
+        ServerFs::removeFile($filePath);
+//    ServerConsole::run("{{bin/php}} -r \"copy('$url', '$destFile');\"");
+        ServerConsole::run("wget $url -o $filePath");
+       // dd(ServerFs::list('~'));
+        if(!empty($hash)) {
+            
+            ServerFs::checkFileHash($filePath, $hash, $algo);
+        }
+    }
+
+    public static function list(string $path)
+    {
+        $output = ServerConsole::run("ls -l");
+        return $output;
+    }
+
     public static function checkFileHash(string $filePath, string $hash, string $algo = 'sha384')
     {
-        $output = static::run("{{bin/php}} -r \"if (hash_file('sha384', '$filePath') === '$hash') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('$filePath'); } echo PHP_EOL;\"");
+        //dd($filePath);
+        $output = static::run("{{bin/php}} -r \"if (hash_file('$algo', '$filePath') === '$hash') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('$filePath'); }\"");
+        //dd($output);
         self::isValidFileHash($filePath, $hash, $algo);
         if ($output != 'Installer verified') {
             throw new \Exception('File hash not verified!');
