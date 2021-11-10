@@ -36,5 +36,14 @@ task('deploy:profile', function () {
     }
     View::info("Selected profile \"$profileName\"");
     $profileConfig = $profiles[$profileName];
+    
+    /*if(!empty($profileConfig['task'])) {
+        foreach ($profileConfig['task'] as $taskName => $taskBody) {
+            task($taskName, $taskBody);
+        }
+    }*/
+    
+//    dd($profileConfig);
+    
     App::initVarsFromArray($profileConfig);
 });

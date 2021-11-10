@@ -10,6 +10,14 @@ task('npm:install:base', function () {
     ServerPackage::install('npm');
 });
 
-task('npm:install', [
+task('npm:build', function () {
+    ServerConsole::cd( '{{release_path}}');
+    ServerConsole::run( '{{bin/npm}} run build');
+});
+
+
+
+/*task('npm:install', [
     'npm:install:base',
-]);
+]);*/
+

@@ -24,7 +24,7 @@ task('lamp:install', [
 
     'composer:install:base',
 
-    'npm:install',
+    'npm:install:base',
 ]);
 
 
