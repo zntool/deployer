@@ -7,6 +7,8 @@ use Deployer\Exception\GracefulShutdownException;
 require_once __DIR__ . '/../../../../../deployer/deployer/recipe/common.php';
 require_once __DIR__ . '/../../../../../zntool/deployer/src/recipe/deploy/all.php';
 
+set('permissions', []);
+
 task('release:update_permissions', function () {
     $permissions = get('permissions', null);
     if(empty($permission)) {
@@ -74,6 +76,11 @@ task('deploy:react', [
     'hosts:list:lamp',
     'notify:finished',
 ]);
+
+task('deploy:react:failed', function () {
+})->setPrivate();
+fail('deploy:react', 'deploy:react:failed');
+after('deploy:react:failed', 'deploy:unlock');
 
 task('deploy:unlock:profile', [
     'deploy:info',
