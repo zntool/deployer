@@ -5,6 +5,9 @@ namespace Deployer;
 set('keep_releases', 3);
 set('current_path', '{{deploy_path}}/current');
 
+set('deploy_var_path', null);
+set('release_var_path', null);
+
 // create new release folder on server
 task('release:create', function () {
     $i = 0;
@@ -32,6 +35,11 @@ task('release:git:create_tag', function () {
 
 // change the symlinks that the webserver uses, to actually "launch" this release
 task('release:update_symlinks:var', function () {
+    if(get('deploy_var_path') == null || get('release_var_path') == null) {
+        View::info('skip');
+        return;
+    }
+    
     if(ServerFs::isDirectoryExists('{{deploy_var_path}}')) {
         ServerFs::removeDir('{{release_var_path}}');
     } else {

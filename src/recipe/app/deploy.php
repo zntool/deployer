@@ -19,7 +19,8 @@ task('release:update_permissions', function () {
     }
 });
 
-task('deploy', [
+
+task('deploy:start', [
     'deploy:info',
     'deploy:profile',
     'confirm',
@@ -29,13 +30,9 @@ task('deploy', [
     'code:update',
 //    'update:permissions',
 //    'create:symlinks',
-    'composer:install',
-    'zn:init',
-//    'release:update_symlinks:public',
-    'release:update_symlinks:var',
-    'release:update_symlinks:env_local',
-    'zn:migrate_up',
-    'zn:fixtures_import',
+]);
+
+task('deploy:end', [
     'release:update_permissions',
     'release:configure_domain',
     'release:update_symlinks:current',
@@ -47,40 +44,36 @@ task('deploy', [
 //    'success',
 ]);
 
+
+task('deploy', [
+    'deploy:start',
+
+    'composer:install',
+    'zn:init',
+//    'release:update_symlinks:public',
+    'release:update_symlinks:var',
+    'release:update_symlinks:env_local',
+    'zn:migrate_up',
+    'zn:fixtures_import',
+
+    'deploy:end',
+]);
+
 after('deploy:failed', 'deploy:unlock');
 
-task('deploy:react', [
-    'deploy:info',
-    'deploy:profile',
-    'confirm',
-
-    'deploy:lock',
-    'benchmark:start',
-    'release:create',
-    'code:update',
-//    'update:permissions',
-//    'create:symlinks',
+task('deploy:npm:client', [
+    'deploy:start',
 
     'npm:install',
     'npm:build',
 
-//    'release:update_symlinks:var',
-//    'release:update_symlinks:env_local',
-    'release:update_permissions',
-
-    'release:configure_domain',
-    'release:update_symlinks:current',
-//    'release:git:create_tag',
-    'deploy:unlock',
-    'release:cleanup',
-    'hosts:list:lamp',
-    'notify:finished',
+    'deploy:end',
 ]);
 
-task('deploy:react:failed', function () {
+task('deploy:npm:client:failed', function () {
 })->setPrivate();
-fail('deploy:react', 'deploy:react:failed');
-after('deploy:react:failed', 'deploy:unlock');
+fail('deploy:npm:client', 'deploy:npm:client:failed');
+after('deploy:npm:client:failed', 'deploy:unlock');
 
 task('deploy:unlock:profile', [
     'deploy:info',
