@@ -45,19 +45,10 @@ task('deploy:end', [
 ]);
 
 
-task('deploy', [
-    'deploy:start',
-
-    'composer:install',
-    'zn:init',
-//    'release:update_symlinks:public',
-    'release:update_symlinks:var',
-    'release:update_symlinks:env_local',
-    'zn:migrate_up',
-    'zn:fixtures_import',
-
-    'deploy:end',
-]);
+/*task('deploy', function () {
+    View::error('Disabled!');
+    exit;
+});*/
 
 after('deploy:failed', 'deploy:unlock');
 
@@ -74,6 +65,31 @@ task('deploy:npm:client:failed', function () {
 })->setPrivate();
 fail('deploy:npm:client', 'deploy:npm:client:failed');
 after('deploy:npm:client:failed', 'deploy:unlock');
+
+
+
+task('deploy:zn:server', [
+    'deploy:start',
+
+    'composer:install',
+    'zn:init',
+//    'release:update_symlinks:public',
+    'release:update_symlinks:var',
+    'release:update_symlinks:env_local',
+    'zn:migrate_up',
+    'zn:fixtures_import',
+
+    'deploy:end',
+]);
+
+task('deploy:zn:server:failed', function () {
+})->setPrivate();
+fail('deploy:zn:server', 'deploy:zn:server:failed');
+after('deploy:zn:server:failed', 'deploy:unlock');
+
+
+
+
 
 task('deploy:unlock:profile', [
     'deploy:info',

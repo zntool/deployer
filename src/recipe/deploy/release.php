@@ -36,7 +36,7 @@ task('release:git:create_tag', function () {
 // change the symlinks that the webserver uses, to actually "launch" this release
 task('release:update_symlinks:var', function () {
     if(get('deploy_var_path') == null || get('release_var_path') == null) {
-        View::info('skip');
+        View::info('skip! Empty confif');
         return;
     }
     
