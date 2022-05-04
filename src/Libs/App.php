@@ -2,6 +2,7 @@
 
 namespace Deployer;
 
+use ZnCore\Base\Helpers\FindFileHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\ArrayHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 use ZnCore\Base\Libs\DotEnv\DotEnv;
@@ -57,7 +58,7 @@ class App
         $profiles = [];
         foreach ($directories as $directory) {
             $directory = rtrim($directory, '/');
-            $files = FileHelper::scanDir($directory);
+            $files = FindFileHelper::scanDir($directory);
             foreach ($files as $file) {
                 $path = $directory . '/' . $file;
                 if(is_file($path) && FileHelper::fileExt($file) == 'php') {
