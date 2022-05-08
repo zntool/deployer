@@ -2,7 +2,8 @@
 
 namespace Deployer;
 
-use ZnCore\Base\Helpers\FindFileHelper;
+use ZnCore\Base\Libs\FileSystem\Helpers\FilePathHelper;
+use ZnCore\Base\Libs\FileSystem\Helpers\FindFileHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\ArrayHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 use ZnCore\Base\Libs\DotEnv\DotEnv;
@@ -61,8 +62,8 @@ class App
             $files = FindFileHelper::scanDir($directory);
             foreach ($files as $file) {
                 $path = $directory . '/' . $file;
-                if(is_file($path) && FileHelper::fileExt($file) == 'php') {
-                    $name = FileHelper::fileRemoveExt($file);
+                if(is_file($path) && FilePathHelper::fileExt($file) == 'php') {
+                    $name = FilePathHelper::fileRemoveExt($file);
                     $profiles[$name] = include $path;
                 }
             }
