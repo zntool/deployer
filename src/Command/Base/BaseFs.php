@@ -6,6 +6,7 @@ use Deployer\ServerConsole;
 use Deployer\ServerFs;
 use ZnCore\Base\Helpers\TempHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
+use ZnCore\Base\Libs\FileSystem\Helpers\FileStorageHelper;
 use function Deployer\download;
 use function Deployer\upload;
 
@@ -144,7 +145,7 @@ abstract class BaseFs extends Base
         $dir = TempHelper::getTmpDirectory('deployer_upload');
         $file = basename($destination);
         $fileName = $dir . '/' . $file;
-        FileHelper::save($fileName, $content);
+        FileStorageHelper::save($fileName, $content);
 //        static::makeDirectory(dirname($destination));
 //        upload($fileName, $destination);
         self::uploadFile($fileName, $destination);
@@ -162,6 +163,6 @@ abstract class BaseFs extends Base
         $file = basename($source);
         $fileName = $dir . '/' . $file;
         download($source, $fileName);
-        return FileHelper::load($fileName);
+        return FileStorageHelper::load($fileName);
     }
 }

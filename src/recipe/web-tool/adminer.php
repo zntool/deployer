@@ -4,6 +4,7 @@ namespace Deployer;
 
 use ZnCore\Base\Helpers\TemplateHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
+use ZnCore\Base\Libs\FileSystem\Helpers\FileStorageHelper;
 
 task('adminer:install:config', function () {
     set('deploy_path', '/var/www/tool/adminer');
@@ -32,7 +33,7 @@ task('adminer:install:base', function () {
     ServerFs::checkFileHash($destFilePath, $hash);
     
     $indexFile = __DIR__ . '/../../resources/adminer/index.php';
-    $indexContent = FileHelper::load($indexFile);
+    $indexContent = FileStorageHelper::load($indexFile);
     $indexContent = TemplateHelper::render($indexContent, ['adminerPhpModule' => $destFile], '{{', '}}');
     ServerFs::uploadContent($indexContent, $destDirectory . '/index.php');
 });
