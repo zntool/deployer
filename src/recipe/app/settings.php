@@ -3,7 +3,7 @@
 namespace Deployer;
 
 use ZnCore\Base\Helpers\TempHelper;
-use ZnCore\Base\Helpers\TemplateHelper;
+use ZnCore\Base\Libs\Text\Helpers\TemplateHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 
 require_once __DIR__ . '/../../../../../zntool/deployer/src/recipe/web-tool/all.php';

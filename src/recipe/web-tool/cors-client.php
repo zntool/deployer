@@ -2,7 +2,7 @@
 
 namespace Deployer;
 
-use ZnCore\Base\Helpers\TemplateHelper;
+use ZnCore\Base\Libs\Text\Helpers\TemplateHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 
 task('test-cors:install:config', function () {
