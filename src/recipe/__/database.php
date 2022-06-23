@@ -2,7 +2,7 @@
 
 namespace Deployer;
 
-use ZnCore\Base\Helpers\DeprecateHelper;
+use ZnCore\Base\Libs\Develop\Helpers\DeprecateHelper;
 
 /**
  * @deprecated 
