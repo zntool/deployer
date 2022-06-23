@@ -2,10 +2,6 @@
 
 namespace Deployer;
 
-use ZnCore\Base\Helpers\TempHelper;
-use ZnCore\Base\Libs\Text\Helpers\TemplateHelper;
-use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
-
 task('apache:restart', function () {
     ServerApache::restart();
 });
@@ -16,7 +12,7 @@ task('apache:start', function () {
 
 task('apache:status', function () {
     $statusEntity = ServerApache::status();
-    if($statusEntity->isActive()) {
+    if ($statusEntity->isActive()) {
         View::success('Apache active');
     } else {
         View::warning('Apache not active');
@@ -37,10 +33,6 @@ task('apache:config:remove_conf', function () {
         ServerApache::removeConf($item['domain']);
     }
 });
-
-
-
-
 
 
 /*task('apache:config:add_conf', function () {
@@ -78,7 +70,7 @@ task('apache:config:set_permission', function () {
 
 task('apache:config:update_config', function () {
     $sourceConfigFile = realpath(__DIR__ . '/../../resources/apache2.conf');
-    if(!ServerFs::isFileExists('/etc/apache2/apache2.conf.bak')) {
+    if (!ServerFs::isFileExists('/etc/apache2/apache2.conf.bak')) {
         ServerFs::move('/etc/apache2/apache2.conf', '/etc/apache2/apache2.conf.bak');
 //        ServerConsole::run('sudo mv /etc/apache2/apache2.conf /etc/apache2/apache2.conf.bak');
         ServerFs::uploadIfNotExist($sourceConfigFile, '/etc/apache2/apache2.conf');
@@ -91,7 +83,7 @@ task('apache:config:enable_autorun', function () {
 });
 
 task('apache:config:link_sites_enabled', function () {
-    if(!ServerFs::isFileExists('/etc/apache2/sites-enabled.bak')) {
+    if (!ServerFs::isFileExists('/etc/apache2/sites-enabled.bak')) {
         ServerFs::move('/etc/apache2/sites-enabled', '/etc/apache2/sites-enabled.bak');
 //        ServerConsole::run('sudo mv /etc/apache2/sites-enabled /etc/apache2/sites-enabled.bak');
         ServerFs::makeLink('/etc/apache2/sites-available', '/etc/apache2/sites-enabled', '-s');

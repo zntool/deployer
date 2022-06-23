@@ -4,8 +4,7 @@ namespace ZnTool\Deployer\Command\Base;
 
 use Deployer\ServerConsole;
 use Deployer\ServerFs;
-use ZnCore\Base\Helpers\TempHelper;
-use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
+use ZnCore\Base\Libs\Env\Helpers\TempHelper;
 use ZnCore\Base\Libs\FileSystem\Helpers\FileStorageHelper;
 use function Deployer\download;
 use function Deployer\upload;
@@ -22,9 +21,9 @@ abstract class BaseFs extends Base
         ServerFs::removeFile($filePath);
 //    ServerConsole::run("{{bin/php}} -r \"copy('$url', '$destFile');\"");
         ServerConsole::run("wget $url -o $filePath");
-       // dd(ServerFs::list('~'));
-        if(!empty($hash)) {
-            
+        // dd(ServerFs::list('~'));
+        if (!empty($hash)) {
+
             ServerFs::checkFileHash($filePath, $hash, $algo);
         }
     }

@@ -2,9 +2,6 @@
 
 namespace Deployer;
 
-use ZnCore\Base\Libs\Text\Helpers\TemplateHelper;
-use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
-
 task('test-cors:install:config', function () {
     set('deploy_path', '/var/www/tool/test-cors');
     set('deploy_public_path', '{{deploy_path}}/client/static');

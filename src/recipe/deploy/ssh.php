@@ -2,7 +2,7 @@
 
 namespace Deployer;
 
-use ZnCore\Base\Legacy\Yii\Helpers\ArrayHelper;
+use ZnCore\Base\Libs\Arr\Helpers\ArrayHelper;
 
 task('ssh:config:set_sudo_password', function () {
     $pass = askHiddenResponse('Input sudo password:');

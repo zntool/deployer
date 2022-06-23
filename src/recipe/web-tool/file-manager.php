@@ -2,9 +2,8 @@
 
 namespace Deployer;
 
-use ZnCore\Base\Libs\Text\Helpers\TemplateHelper;
-use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 use ZnCore\Base\Libs\FileSystem\Helpers\FileStorageHelper;
+use ZnCore\Base\Libs\Text\Helpers\TemplateHelper;
 
 // https://github.com/alexantr/filemanager
 // Default username/password: fm_admin/fm_admin
@@ -31,7 +30,7 @@ task('file-manager:install:base', function () {
     $destFile = '.htaccess';
     $destDirectory = get('deploy_path');
     $destFilePath = $destDirectory . '/' . $destFile;
-    
+
     $htaccessFile = __DIR__ . '/../../resources/.htaccess';
     $htaccessContent = FileStorageHelper::load($htaccessFile);
     $htaccessContent = TemplateHelper::render($htaccessContent, ['endpointScript' => 'filemanager.php'], '{{', '}}');

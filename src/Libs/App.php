@@ -2,11 +2,10 @@
 
 namespace Deployer;
 
+use ZnCore\Base\Libs\Arr\Helpers\ArrayHelper;
+use ZnCore\Base\Libs\DotEnv\Domain\Libs\DotEnv;
 use ZnCore\Base\Libs\FileSystem\Helpers\FilePathHelper;
 use ZnCore\Base\Libs\FileSystem\Helpers\FindFileHelper;
-use ZnCore\Base\Legacy\Yii\Helpers\ArrayHelper;
-use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
-use ZnCore\Base\Libs\DotEnv\Domain\Libs\DotEnv;
 use ZnTool\Deployer\Helpers\LoaderHelper;
 
 class App
@@ -37,7 +36,7 @@ class App
 
     public static function initVars()
     {
-        if(isset($_ENV['DEPLOYER_CONFIG_FILE'])) {
+        if (isset($_ENV['DEPLOYER_CONFIG_FILE'])) {
             $vars = include($_ENV['DEPLOYER_CONFIG_FILE']);
         }
         foreach ($_ENV as $name => $value) {
@@ -52,7 +51,7 @@ class App
 
     public static function loadProfiles()
     {
-        if(empty($_ENV['DEPLOYER_PROFILE_DIRECTORIES'])) {
+        if (empty($_ENV['DEPLOYER_PROFILE_DIRECTORIES'])) {
             return;
         }
         $directories = explode(',', $_ENV['DEPLOYER_PROFILE_DIRECTORIES']);
@@ -62,7 +61,7 @@ class App
             $files = FindFileHelper::scanDir($directory);
             foreach ($files as $file) {
                 $path = $directory . '/' . $file;
-                if(is_file($path) && FilePathHelper::fileExt($file) == 'php') {
+                if (is_file($path) && FilePathHelper::fileExt($file) == 'php') {
                     $name = FilePathHelper::fileRemoveExt($file);
                     $profiles[$name] = include $path;
                 }
@@ -70,7 +69,7 @@ class App
         }
         set('profiles', $profiles);
     }
-    
+
     public static function initVarsFromArray(array $vars)
     {
         foreach ($vars as $varName => $value) {
@@ -78,7 +77,7 @@ class App
         }
         self::$vars = ArrayHelper::merge(self::$vars, $vars);
     }
-    
+
     public static function initSshConnect(string $userName = null)
     {
         $userName = $userName ?: get('host_user');

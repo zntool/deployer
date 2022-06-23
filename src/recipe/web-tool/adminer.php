@@ -2,9 +2,8 @@
 
 namespace Deployer;
 
-use ZnCore\Base\Libs\Text\Helpers\TemplateHelper;
-use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 use ZnCore\Base\Libs\FileSystem\Helpers\FileStorageHelper;
+use ZnCore\Base\Libs\Text\Helpers\TemplateHelper;
 
 task('adminer:install:config', function () {
     set('deploy_path', '/var/www/tool/adminer');
@@ -23,7 +22,7 @@ task('adminer:install:base', function () {
     $destFile = 'adminer-4.8.1.php';
     $destDirectory = get('deploy_path');
     $destFilePath = $destDirectory . '/' . $destFile;
-    if(ServerFs::isFileExists($destDirectory)) {
+    if (ServerFs::isFileExists($destDirectory)) {
         View::warning('Adminer already installed');
         return;
     }
@@ -31,7 +30,7 @@ task('adminer:install:base', function () {
     ServerConsole::cd($destDirectory);
     ServerConsole::run("{{bin/php}} -r \"copy('$url', '$destFile');\"");
     ServerFs::checkFileHash($destFilePath, $hash);
-    
+
     $indexFile = __DIR__ . '/../../resources/adminer/index.php';
     $indexContent = FileStorageHelper::load($indexFile);
     $indexContent = TemplateHelper::render($indexContent, ['adminerPhpModule' => $destFile], '{{', '}}');
