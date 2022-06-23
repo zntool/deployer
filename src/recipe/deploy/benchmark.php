@@ -2,7 +2,7 @@
 
 namespace Deployer;
 
-use ZnCore\Base\Libs\Develop\Libs\Benchmark;
+use ZnCore\Base\Develop\Libs\Benchmark;
 
 class BenchmarkWidget
 {

@@ -2,6 +2,6 @@
 
 namespace Deployer;
 
-use ZnCore\Base\Libs\Php\Helpers\PhpHelper;
+use ZnCore\Base\Php\Helpers\PhpHelper;
 
 PhpHelper::requireFromDirectory(__DIR__);

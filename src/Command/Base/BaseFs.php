@@ -4,8 +4,8 @@ namespace ZnTool\Deployer\Command\Base;
 
 use Deployer\ServerConsole;
 use Deployer\ServerFs;
-use ZnCore\Base\Libs\Env\Helpers\TempHelper;
-use ZnCore\Base\Libs\FileSystem\Helpers\FileStorageHelper;
+use ZnCore\Base\Env\Helpers\TempHelper;
+use ZnCore\Base\FileSystem\Helpers\FileStorageHelper;
 use function Deployer\download;
 use function Deployer\upload;
 

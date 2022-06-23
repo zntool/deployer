@@ -2,7 +2,7 @@
 
 namespace Deployer;
 
-use ZnCore\Base\Libs\Text\Helpers\TemplateHelper;
+use ZnCore\Base\Text\Helpers\TemplateHelper;
 use ZnTool\Deployer\Command\Base\BaseApache;
 
 class ServerApache extends BaseApache
