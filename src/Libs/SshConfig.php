@@ -2,7 +2,7 @@
 
 namespace Deployer;
 
-use ZnCore\Base\Arr\Helpers\ArrayHelper;
+use ZnCore\Arr\Helpers\ArrayHelper;
 
 class SshConfig
 {
