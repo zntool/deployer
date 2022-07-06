@@ -2,7 +2,7 @@
 
 namespace Deployer;
 
-use ZnCore\Base\Php\Helpers\PhpHelper;
+use ZnCore\Code\Helpers\PhpHelper;
 
 require_once __DIR__ . '/../Helpers/functions.php';
 PhpHelper::requireFromDirectory(__DIR__ . '/../Libs');
