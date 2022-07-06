@@ -2,8 +2,8 @@
 
 namespace Deployer;
 
-use ZnCore\Base\FileSystem\Helpers\FileStorageHelper;
-use ZnCore\Base\Text\Helpers\TemplateHelper;
+use ZnCore\FileSystem\Helpers\FileStorageHelper;
+use ZnCore\Text\Helpers\TemplateHelper;
 
 task('adminer:install:config', function () {
     set('deploy_path', '/var/www/tool/adminer');

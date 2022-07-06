@@ -2,8 +2,8 @@
 
 namespace Deployer;
 
-use ZnCore\Base\FileSystem\Helpers\FileStorageHelper;
-use ZnCore\Base\Text\Helpers\TemplateHelper;
+use ZnCore\FileSystem\Helpers\FileStorageHelper;
+use ZnCore\Text\Helpers\TemplateHelper;
 
 // https://github.com/alexantr/filemanager
 // Default username/password: fm_admin/fm_admin

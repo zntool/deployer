@@ -3,7 +3,7 @@
 namespace ZnTool\Deployer\Command\Base;
 
 use Deployer\ServerApache;
-use ZnCore\Base\Text\Helpers\TemplateHelper;
+use ZnCore\Text\Helpers\TemplateHelper;
 use ZnTool\Deployer\Entities\ApacheStatusEntity;
 use function Deployer\get;
 
