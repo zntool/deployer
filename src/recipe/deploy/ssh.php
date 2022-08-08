@@ -4,15 +4,14 @@ namespace Deployer;
 
 use ZnCore\Arr\Helpers\ArrayHelper;
 
-task('ssh:config:set_sudo_password', function () {
-    $pass = askHiddenResponse('Input sudo password:');
-    ServerFs::uploadContent($pass, '~/sudo-pass');
-});
-
-task('ssh:config:runSshAgent', function () {
-//    ServerConsole::run('eval $(ssh-agent)');
-    ServerSsh::runAgent();
-});
+task('ssh:config', [
+    //'ssh:connect_by_root',
+    //'ssh:config:runSshAgent',
+    'ssh:config:authSsh',
+    'ssh:config:set_sudo_password',
+    'ssh:config:gitSsh',
+//    'ssh:config:gitSshInfo',
+]);
 
 task('ssh:config:authSsh', function () {
     $keyFile = '{{host_identity_file}}';
@@ -29,6 +28,16 @@ task('ssh:config:authSsh', function () {
     if ($isUploaded) {
         writeln("auth key installed!");
     }
+});
+
+task('ssh:config:set_sudo_password', function () {
+    $pass = askHiddenResponse('Input sudo password:');
+    ServerFs::uploadContent($pass, '~/sudo-pass');
+});
+
+task('ssh:config:runSshAgent', function () {
+//    ServerConsole::run('eval $(ssh-agent)');
+    ServerSsh::runAgent();
 });
 
 /*task('ssh:config:gitSsh', function () {
@@ -61,12 +70,3 @@ task('ssh:config:gitSshInfo', function () {
 //    $output = ServerConsole::run('ssh-add -l');
    // writeln($output);
 });
-
-task('ssh:config', [
-    //'ssh:connect_by_root',
-    //'ssh:config:runSshAgent',
-    'ssh:config:authSsh',
-    'ssh:config:set_sudo_password',
-    'ssh:config:gitSsh',
-//    'ssh:config:gitSshInfo',
-]);
