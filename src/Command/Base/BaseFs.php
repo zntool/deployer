@@ -36,18 +36,25 @@ abstract class BaseFs extends Base
 
     public static function checkFileHash(string $filePath, string $hash, string $algo = 'sha384')
     {
-        //dd($filePath);
+        $actualHash = static::runPhpCode("echo hash_file('$algo', '$filePath');");
+        if($actualHash === $hash) {
+
+        } else {
+            throw new \Exception('File hash not verified!' . PHP_EOL . "$actualHash != $hash");
+        }
+
+        /*//dd($filePath);
         $output = static::run("{{bin/php}} -r \"if (hash_file('$algo', '$filePath') === '$hash') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('$filePath'); }\"");
         //dd($output);
         self::isValidFileHash($filePath, $hash, $algo);
         if ($output != 'Installer verified') {
             throw new \Exception('File hash not verified!');
-        }
+        }*/
     }
 
     public static function isValidFileHash(string $filePath, string $hash, string $algo = 'sha384'): bool
     {
-        $output = static::run("{{bin/php}} -r \"if (hash_file('sha384', '$filePath') === '$hash') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('$filePath'); } echo PHP_EOL;\"");
+        $output = static::run("{{bin/php}} -r \"if (hash_file('$algo', '$filePath') === '$hash') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('$filePath'); } echo PHP_EOL;\"");
         return $output != 'Installer verified';
     }
 

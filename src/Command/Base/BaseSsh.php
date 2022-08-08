@@ -88,6 +88,9 @@ abstract class BaseSsh extends Base
             static::runAgent();
             static::run("ssh-add -D $dest");
             static::run("ssh-add $dest");
+//            dump($dest);
+            ServerFs::chmod($dest, '=600');
+            ServerFs::chmod("$dest.pub", '=600');
         }
     }
 }

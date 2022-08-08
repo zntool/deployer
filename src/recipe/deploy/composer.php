@@ -8,8 +8,9 @@ task('composer:install:base', function () {
         return;
     }
 
-    $url = 'https://getcomposer.org/installer';
-    $hash = '906a84df04cea2aa72f40b5f787e49f22d4c2f19492ac310e8cba5b96ac8b64115ac402c8cd292b8a03482574915d1a8';
+//    $url = 'https://getcomposer.org/installer';
+    $url = 'https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer';
+    $hash = '6de4cae7faf7bc6321c0a209a502c85763499932cbbfbb8b207784c9061fbc86';
     $destFile = 'composer-setup.php';
     $destDirectory = get('deploy_path');
     $destFilePath = /*$destDirectory . '/' .*/ $destFile;
@@ -18,7 +19,7 @@ task('composer:install:base', function () {
     ServerConsole::run('{{bin/php}} -r "unlink(\'composer.phar\');"');
 
     ServerConsole::run("{{bin/php}} -r \"copy('$url', '$destFile');\"");
-    ServerFs::checkFileHash($destFilePath, $hash);
+    ServerFs::checkFileHash($destFilePath, $hash, 'sha256');
 
    /* ServerConsole::run('{{bin/php}} -r "copy(\'https://getcomposer.org/installer\', \'composer-setup.php\');"');
     $output = ServerConsole::run('{{bin/php}} -r "if (hash_file(\'sha384\', \'composer-setup.php\') === \'906a84df04cea2aa72f40b5f787e49f22d4c2f19492ac310e8cba5b96ac8b64115ac402c8cd292b8a03482574915d1a8\') { echo \'Installer verified\'; } else { echo \'Installer corrupt\'; unlink(\'composer-setup.php\'); } echo PHP_EOL;"');

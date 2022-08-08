@@ -46,6 +46,11 @@ abstract class Base
         return $consoleClassName::run($command);
     }
 
+    protected static function runPhpCode(string $code)
+    {
+        return static::run("{{bin/php}} -r \"{$code}\"");
+    }
+
     protected static function cd(string $path)
     {
         $consoleClassName = static::consoleClass();
