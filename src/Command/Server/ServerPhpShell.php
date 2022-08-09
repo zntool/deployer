@@ -2,9 +2,9 @@
 
 namespace Deployer;
 
-use ZnTool\Deployer\Command\Base\BasePackage;
+use ZnTool\Deployer\Command\Base\BasePhp;
 
-class ServerPackage extends BasePackage
+class ServerPhpShell extends BasePhp
 {
 
     protected static function side(): string

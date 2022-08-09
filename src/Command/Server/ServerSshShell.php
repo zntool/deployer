@@ -2,9 +2,9 @@
 
 namespace Deployer;
 
-use ZnTool\Deployer\Command\Base\BaseZn;
+use ZnTool\Deployer\Command\Base\BaseSsh;
 
-class ServerZn extends BaseZn
+class ServerSshShell extends BaseSsh
 {
 
     protected static function side(): string

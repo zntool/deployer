@@ -5,7 +5,7 @@ namespace Deployer;
 use ZnCore\Text\Helpers\TemplateHelper;
 use ZnTool\Deployer\Command\Base\BaseApache;
 
-class ServerApache extends BaseApache
+class ServerApacheShell extends BaseApache
 {
 
     protected static function side(): string

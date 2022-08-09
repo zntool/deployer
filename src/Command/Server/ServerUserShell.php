@@ -4,7 +4,7 @@ namespace Deployer;
 
 use ZnTool\Deployer\Command\Base\BaseUser;
 
-class ServerUser extends BaseUser
+class ServerUserShell extends BaseUser
 {
 
     protected static function side(): string

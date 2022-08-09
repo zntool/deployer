@@ -4,7 +4,7 @@ namespace Deployer;
 
 use ZnTool\Deployer\Command\Base\BaseApt;
 
-class _____ServerApt extends BaseApt
+class _____ServerAptShell extends BaseApt
 {
 
     protected static function side(): string

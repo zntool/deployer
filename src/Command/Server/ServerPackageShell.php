@@ -2,9 +2,9 @@
 
 namespace Deployer;
 
-use ZnTool\Deployer\Command\Base\BaseGit;
+use ZnTool\Deployer\Command\Base\BasePackage;
 
-class ServerGit extends BaseGit
+class ServerPackageShell extends BasePackage
 {
 
     protected static function side(): string
